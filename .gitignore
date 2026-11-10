@@ -1,0 +1,8 @@
+node_modules/
+greencampus.db*
+uploads/*
+!uploads/.gitkeep
+backups/
+.env
+*.pem
+*.crt

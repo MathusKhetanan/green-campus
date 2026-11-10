@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Green Campus · หน้าครู</title>
+<style>
+:root{--ink:#0f2a22;--leaf:#2f9e5b;--mint:#d9f2e1;--coral:#e8554a;--sun:#ffc83d;font-family:system-ui,'Prompt','Sarabun',sans-serif;color:var(--ink)}
+*{box-sizing:border-box}body{margin:0;background:#f7fcf8}main{max-width:980px;margin:0 auto;padding:16px}
+button{border:0;border-radius:10px;padding:.5em 1em;background:var(--leaf);color:#fff;font:inherit;font-weight:500;cursor:pointer}
+button.no{background:var(--coral)}button.alt{background:var(--mint);color:var(--ink)}button:disabled{opacity:.45}
+input,select,textarea{font:inherit;padding:.5em .6em;border:2px solid #bcd9c7;border-radius:10px;background:#fff;color:var(--ink);max-width:100%}
+textarea{width:100%}nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}nav button{background:var(--mint);color:var(--ink)}nav button.on{background:var(--ink);color:#fff}
+.card{display:grid;grid-template-columns:180px 1fr;gap:14px;background:#fff;border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 1px 0 #cfe5d6}
+.card img{width:180px;height:180px;object-fit:cover;border-radius:10px;background:var(--mint)}
+.box{background:#fff;border-radius:14px;padding:12px 14px;margin:10px 0;box-shadow:0 1px 0 #cfe5d6}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid #e1efe6;flex-wrap:wrap}.row:first-child{border-top:0}
+.sm{font-size:.86rem;opacity:.8}.stats{display:flex;gap:10px;flex-wrap:wrap}.stats div{background:var(--mint);border-radius:12px;padding:8px 14px}
+.badge{background:var(--coral);color:#fff;border-radius:99px;padding:0 .55em;font-size:.8rem;margin-left:4px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.err{color:var(--coral)}
+@media(max-width:600px){.card{grid-template-columns:1fr}.card img{width:100%;height:auto;aspect-ratio:1}}
+</style></head><body><main>
+<h1>Green Campus · หน้าครู</h1>
+<div id="loginBox"><p>ใส่รหัสครู</p><input id="code" type="password"> <button onclick="login()">เข้าสู่ระบบ</button> <span class="err" id="err"></span></div>
+<div id="app" hidden><div class="stats" id="stats"></div><nav id="tabs"></nav><div id="view"></div></div>
+<script>
+let T = sessionStorage.getItem('gc_admin'), tab = 'review', stat = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(p, o = {}) {
+  const r = await fetch('/api/admin' + p, { ...o, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + T }, body: o.body && JSON.stringify(o.body) });
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401) { sessionStorage.removeItem('gc_admin'); T = null; show(false); throw new Error('หมดเวลา กรุณาเข้าสู่ระบบใหม่'); }
+  if (!r.ok) throw new Error(j.error || 'ผิดพลาด'); return j;
+}
+const act = async (fn, after = render) => { try { await fn(); await after(); } catch (e) { alert(e.message); } };
+function show(on) { $('loginBox').hidden = on; $('app').hidden = !on; }
+async function login() {
+  try { const r = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: $('code').value }) });
+    const j = await r.json(); if (!r.ok) throw new Error(j.error); T = j.token; sessionStorage.setItem('gc_admin', T); start(); } catch (e) { $('err').textContent = e.message; }
+}
+const TABS = [['review', 'รอตรวจ'], ['spot', 'สุ่มตรวจที่ AI ผ่าน'], ['redeem', 'ส่งมอบของรางวัล'], ['missions', 'ภารกิจ'], ['rewards', 'ของรางวัล'], ['users', 'นักเรียน'], ['export', 'ส่งออก CSV']];
+async function start() {
+  try { stat = await api('/stats'); } catch { return show(false); }
+  show(true);
+  const by = Object.fromEntries(stat.byStatus.map(s => [s.status, s.c]));
+  $('stats').innerHTML = `<div>นักเรียน <b>${stat.users}</b></div><div>ผ่าน <b>${by.approved || 0}</b></div><div>รอครู <b>${by.needs_review || 0}</b></div><div>ไม่ผ่าน <b>${by.rejected || 0}</b></div><div>AI วันนี้ <b>${stat.aiToday}/${stat.aiLimit}</b></div>`;
+  $('tabs').innerHTML = TABS.map(([k, n]) => `<button class="${tab === k ? 'on' : ''}" onclick="tab='${k}';start()">${n}${k === 'review' && by.needs_review ? `<span class="badge">${by.needs_review}</span>` : ''}${k === 'redeem' && stat.pendingRedeem ? `<span class="badge">${stat.pendingRedeem}</span>` : ''}</button>`).join('');
+  await render();
+}
+async function loadImgs() { // โหลดรูปด้วยสิทธิ์ครู (ไม่ใส่โทเค็นใน URL)
+  document.querySelectorAll('img[data-id]').forEach(async im => { try { const r = await fetch('/api/admin/image/' + im.dataset.id, { headers: { Authorization: 'Bearer ' + T } }); if (r.ok) im.src = URL.createObjectURL(await r.blob()); } catch {} });
+}
+const subCard = (s, btns) => `<div class="card"><img data-id="${s.id}" alt="หลักฐาน"><div><b>${esc(s.title)}</b><div>${esc(s.name)} · ${esc(s.classroom)}</div>
+  <div class="sm">${esc(s.created_at)} (UTC)</div><p class="sm">AI (${esc(s.mode)}) มั่นใจ ${Math.round((s.conf || 0) * 100)}%: ${esc(s.reason || '-')}</p>${btns}</div></div>`;
+async function render() {
+  const v = $('view'); v.innerHTML = '<p class="sm">กำลังโหลด…</p>';
+  try {
+    if (tab === 'review' || tab === 'spot') {
+      const list = await api('/submissions?status=' + (tab === 'review' ? 'needs_review' : 'approved'));
+      v.innerHTML = (tab === 'spot' ? '<p class="sm">รูปล่าสุดที่ AI ให้ผ่านเอง ควรสุ่มดูเป็นประจำ ถ้าพบว่าไม่ใช่กิจกรรมจริงให้กด "เพิกถอน" (หักคะแนนที่ให้ไป และลบใบประกาศของรายการนั้น)</p>' : '')
+        + (list.map(s => subCard(s, tab === 'review'
+          ? `<button onclick="act(()=>api('/submissions/${s.id}/review',{method:'POST',body:{approve:true}}),start)">อนุมัติ</button> <button class="no" onclick="act(()=>api('/submissions/${s.id}/review',{method:'POST',body:{approve:false}}),start)">ปฏิเสธ</button>`
+          : `<button class="no" onclick="if(confirm('เพิกถอนรายการนี้? จะหักคะแนนที่ให้ไป'))act(()=>api('/submissions/${s.id}/revoke',{method:'POST'}),start)">เพิกถอน</button>`)).join('') || '<p>ไม่มีรายการ 🎉</p>');
+      loadImgs();
+    } else if (tab === 'redeem') {
+      const st = window._rs || 'pending'; const list = await api('/redemptions?status=' + st);
+      v.innerHTML = `<select onchange="window._rs=this.value;render()"><option value="pending" ${st === 'pending' ? 'selected' : ''}>รอส่งมอบ</option><option value="given" ${st === 'given' ? 'selected' : ''}>ส่งมอบแล้ว</option><option value="cancelled" ${st === 'cancelled' ? 'selected' : ''}>ยกเลิกแล้ว</option></select><div class="box">`
+        + (list.map(d => `<div class="row"><div><b>${esc(d.reward)}</b> · ${d.cost} Point<div>${esc(d.name)} (${esc(d.student_id)}) · ${esc(d.classroom)}</div><div class="sm">${esc(d.created_at)} UTC${d.given_at ? ' → ส่งมอบ ' + esc(d.given_at) : ''}</div></div>
+          ${st === 'pending' ? `<div><button onclick="act(()=>api('/redemptions/${d.id}/give',{method:'POST'}),start)">ส่งมอบแล้ว</button> <button class="no" onclick="if(confirm('ยกเลิกและคืนคะแนน?'))act(()=>api('/redemptions/${d.id}/cancel',{method:'POST'}),start)">ยกเลิก/คืนคะแนน</button></div>` : ''}</div>`).join('') || '<p>ไม่มีรายการ</p>') + '</div>';
+    } else if (tab === 'missions') {
+      const ms = await api('/missions');
+      v.innerHTML = `<div class="box"><b>เพิ่มภารกิจ</b><div class="form">
+        <input id="m_t" placeholder="ชื่อภารกิจ"><select id="m_ty"><option value="daily">ประจำวัน</option><option value="weekly">ประจำสัปดาห์</option><option value="special">พิเศษ</option></select>
+        <select id="m_c"><option>waste</option><option>energy</option><option>water</option><option>tree</option><option>cleanup</option><option>volunteer</option><option>other</option></select>
+        <input id="m_p" type="number" placeholder="Point (15-50)" value="15"><input id="m_co" type="number" placeholder="Coin" value="10"><input id="m_e" type="number" placeholder="EXP" value="20">
+        <input id="m_l" type="number" placeholder="ทำได้กี่ครั้ง/รอบ" value="1"><label><input id="m_cert" type="checkbox"> ออกใบประกาศ</label></div>
+        <input id="m_d" style="width:100%;margin:6px 0" placeholder="คำอธิบายสำหรับนักเรียน"><textarea id="m_h" rows="2" placeholder="รูปที่ถูกต้องควรเป็นอย่างไร (ให้ AI ใช้ตัดสิน) ยิ่งเจาะจงยิ่งแม่น เช่น ต้องเห็นถังสีเหลืองและขวดพลาสติกกำลังถูกทิ้ง"></textarea>
+        <button onclick="addMission()">เพิ่มภารกิจ</button></div>
+        <div class="box">` + ms.map(m => `<div class="row" style="${m.active ? '' : 'opacity:.5'}"><div><b>${esc(m.title)}</b> <span class="sm">${m.type} · ${m.category} · ${m.points}P/${m.coins}C/${m.exp}XP · ${m.limit_n}ครั้ง${m.certificate ? ' · 🎓' : ''}</span>
+          <div class="sm">AI: ${esc(m.ai_hint)}</div></div><div><button class="alt" onclick="editHint(${m.id},'${esc(m.ai_hint).replace(/'/g, '&#39;')}')">แก้คำอธิบายให้ AI</button> <button class="alt" onclick="editPts(${m.id},${m.points})">แก้ Point</button>
+          <button class="${m.active ? 'no' : ''}" onclick="act(()=>api('/missions/${m.id}',{method:'PATCH',body:{active:${m.active ? 'false' : 'true'}}}))">${m.active ? 'ปิด' : 'เปิด'}</button></div></div>`).join('') + '</div>';
+    } else if (tab === 'rewards') {
+      const rs = await api('/rewards');
+      v.innerHTML = `<div class="box"><b>เพิ่มของรางวัล</b><div class="form"><input id="r_n" placeholder="ชื่อ"><input id="r_c" type="number" placeholder="ราคา (Point)"><input id="r_s" type="number" placeholder="จำนวน"></div><br><button onclick="addReward()">เพิ่ม</button></div>
+        <div class="box">` + rs.map(r => `<div class="row"><div><b>${esc(r.name)}</b> <span class="sm">${r.cost} Point · เหลือ ${r.stock}</span></div><div><button class="alt" onclick="editReward(${r.id},'stock',${r.stock})">แก้จำนวน</button> <button class="alt" onclick="editReward(${r.id},'cost',${r.cost})">แก้ราคา</button></div></div>`).join('') + '</div>';
+    } else if (tab === 'users') {
+      const q = window._q || ''; const us = await api('/users?q=' + encodeURIComponent(q));
+      v.innerHTML = `<input id="q" placeholder="ค้นหารหัส/ชื่อ/ห้อง" value="${esc(q)}" onkeydown="if(event.key==='Enter'){window._q=this.value;render()}"> <button onclick="window._q=$('q').value;render()">ค้นหา</button>
+        <div class="box">` + (us.map(u => `<div class="row"><div><b>${esc(u.name)}</b> ${esc(u.classroom)}<div class="sm">${esc(u.student_id)} · ${u.points} Point (สะสม ${u.lifetime_points})</div></div><button class="alt" onclick="resetPin(${u.id},'${esc(u.name).replace(/'/g, '&#39;')}')">ตั้ง PIN ใหม่</button></div>`).join('') || '<p>ไม่พบ</p>') + '</div>';
+    } else if (tab === 'export') {
+      v.innerHTML = '<div class="box"><p>ไฟล์ CSV เปิดใน Excel ได้ ภาษาไทยไม่เพี้ยน</p>' + [['users', 'รายชื่อนักเรียนและคะแนน'], ['submissions', 'ประวัติการส่งหลักฐาน'], ['redemptions', 'ประวัติการแลกของรางวัล']].map(([k, n]) => `<p><button onclick="dl('${k}')">ดาวน์โหลด: ${n}</button></p>`).join('') + '</div>';
+    }
+  } catch (e) { v.innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+}
+const ask = (m, d) => { const v = prompt(m, d); return v === null ? null : v.trim(); };
+function editHint(id, cur) { const v = ask('คำอธิบายรูปที่ถูกต้อง (ให้ AI ใช้ตัดสิน)', cur); if (v) act(() => api('/missions/' + id, { method: 'PATCH', body: { ai_hint: v } })); }
+function editPts(id, cur) { const v = ask('Green Point ต่อครั้ง', cur); if (v) act(() => api('/missions/' + id, { method: 'PATCH', body: { points: v } })); }
+function editReward(id, f, cur) { const v = ask(f === 'stock' ? 'จำนวนคงเหลือ' : 'ราคา (Point)', cur); if (v !== null && v !== '') act(() => api('/rewards/' + id, { method: 'PATCH', body: { [f]: v } })); }
+function resetPin(id, name) { const v = ask(`ตั้ง PIN ใหม่ให้ ${name} (ตัวเลข 4-6 หลัก)`, ''); if (v) act(async () => { await api(`/users/${id}/reset-pin`, { method: 'POST', body: { pin: v } }); alert('ตั้ง PIN ใหม่แล้ว แจ้งนักเรียนและให้เปลี่ยนรหัสที่ไม่ซ้ำกับของคนอื่น'); }); }
+function addMission() {
+  act(() => api('/missions', { method: 'POST', body: { title: $('m_t').value, type: $('m_ty').value, category: $('m_c').value, points: $('m_p').value, coins: $('m_co').value, exp: $('m_e').value, limit_n: $('m_l').value, certificate: $('m_cert').checked, description: $('m_d').value, ai_hint: $('m_h').value } }));
+}
+function addReward() { act(() => api('/rewards', { method: 'POST', body: { name: $('r_n').value, cost: $('r_c').value, stock: $('r_s').value } })); }
+async function dl(what) { try { const r = await fetch('/api/admin/export/' + what, { headers: { Authorization: 'Bearer ' + T } }); if (!r.ok) throw new Error('ดาวน์โหลดไม่ได้'); const a = document.createElement('a'); a.href = URL.createObjectURL(await r.blob()); a.download = what + '.csv'; a.click(); } catch (e) { alert(e.message); } }
+if (T) start(); else show(false);
+</script></main></body></html>
