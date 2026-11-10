@@ -7,1048 +7,1099 @@
   <title>Green Campus</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --ink: #0f2a22;
-      --leaf: #2f9e5b;
-      --mint: #d9f2e1;
-      --sun: #ffc83d;
-      --sky: #bfe6f5;
-      --coral: #e8554a;
-      --paper: #f7fcf8;
-      --r: 14px;
-      font-family: 'Prompt', system-ui, sans-serif;
-      color: var(--ink)
-    }
+    /* UI Masterpiece Styling */
+:root {
+  --main-green: #52c97f;
+  --dark-green: #176b3b;
+  --panel-bg: rgba(255, 255, 255, 0.92);
+}
 
-    * {
-      box-sizing: border-box
-    }
+#stat {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 2px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(15, 42, 34, 0.15);
+  top: 15px; left: 15px;
+  padding: 12px 18px;
+}
 
-    html,
-    body {
-      margin: 0;
-      height: 100%;
-      overflow: hidden;
-      background: var(--sky)
-    }
+#menu {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 2px solid #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(15, 42, 34, 0.15);
+  bottom: 15px;
+  padding: 8px 16px;
+  gap: 12px;
+}
 
-    button {
-      font: inherit;
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: .55em 1em;
-      background: var(--leaf);
-      color: #fff;
-      font-weight: 500
-    }
+#menu button .ic {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #fff;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-    button.alt {
-      background: var(--mint);
-      color: var(--ink)
-    }
+#menu button:hover .ic {
+  transform: translateY(-5px) scale(1.1);
+}
 
-    button:disabled {
-      opacity: .45;
-      cursor: default
-    }
+#panel {
+  background: linear-gradient(180deg, #ffffff, #f0f9f3);
+  border-radius: 24px;
+  border: 4px solid #fff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
 
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
-      outline: 3px solid var(--sun);
-      outline-offset: 2px
-    }
+  #panel h2 {
+    color: var(--dark-green);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+      :root {
+        --ink: #0f2a22;
+        --leaf: #2f9e5b;
+        --mint: #d9f2e1;
+        --sun: #ffc83d;
+        --sky: #bfe6f5;
+        --coral: #e8554a;
+        --paper: #f7fcf8;
+        --r: 14px;
+        font-family: 'Prompt', system-ui, sans-serif;
+        color: var(--ink)
+      }
 
-    input,
-    select {
-      font: inherit;
-      padding: .55em .7em;
-      border: 2px solid #bcd9c7;
-      border-radius: 10px;
-      width: 100%;
-      background: #fff;
-      color: var(--ink)
-    }
+      * {
+        box-sizing: border-box
+      }
 
-    #game {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block
-    }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: var(--sky)
+      }
 
-    .hud {
-      position: fixed;
-      z-index: 5;
-      pointer-events: none
-    }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: 0;
+        border-radius: 10px;
+        padding: .55em 1em;
+        background: var(--leaf);
+        color: #fff;
+        font-weight: 500
+      }
 
-    #stat {
-      top: max(10px, env(safe-area-inset-top));
-      left: 10px;
-      background: var(--paper);
-      border-radius: var(--r);
-      padding: 10px 14px;
-      min-width: 210px;
-      box-shadow: 0 2px 0 rgba(15, 42, 34, .15)
-    }
+      button.alt {
+        background: var(--mint);
+        color: var(--ink)
+      }
 
-    #stat b {
-      font-weight: 600
-    }
+      button:disabled {
+        opacity: .45;
+        cursor: default
+      }
 
-    .bar {
-      height: 8px;
-      background: var(--mint);
-      border-radius: 5px;
-      margin: 6px 0;
-      overflow: hidden
-    }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--sun);
+        outline-offset: 2px
+      }
 
-    .bar i {
-      display: block;
-      height: 100%;
-      background: var(--leaf)
-    }
+      input,
+      select {
+        font: inherit;
+        padding: .55em .7em;
+        border: 2px solid #bcd9c7;
+        border-radius: 10px;
+        width: 100%;
+        background: #fff;
+        color: var(--ink)
+      }
 
-    #stat .m {
-      display: flex;
-      gap: 14px;
-      font-size: .9rem
-    }
-
-    #mini {
-      top: max(10px, env(safe-area-inset-top));
-      right: 10px;
-      border-radius: 50%;
-      border: 4px solid var(--paper);
-      background: #9fd3a8;
-      width: 132px;
-      height: 132px;
-      overflow: hidden
-    }
-
-    #menu {
-      bottom: max(12px, env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      pointer-events: auto;
-      background: var(--paper);
-      padding: 6px;
-      border-radius: var(--r);
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 96vw
-    }
-
-    #menu button {
-      background: transparent;
-      color: var(--ink);
-      padding: .45em .8em
-    }
-
-    #menu button:hover {
-      background: var(--mint)
-    }
-
-    #hint {
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--ink);
-      color: #fff;
-      padding: .5em 1em;
-      border-radius: 99px;
-      display: none
-    }
-
-    #toast {
-      z-index: 30;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--ink);
-      color: #fff;
-      padding: .6em 1.1em;
-      border-radius: 12px;
-      display: none;
-      max-width: 90vw;
-      text-align: center
-    }
-
-    #pad {
-      position: fixed;
-      left: 18px;
-      bottom: 90px;
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .35);
-      display: none;
-      z-index: 5;
-      touch-action: none
-    }
-
-    #pad i {
-      position: absolute;
-      left: 35px;
-      top: 35px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--paper)
-    }
-
-    @media (pointer:coarse) {
-      #pad {
+      #game {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
         display: block
       }
-    }
 
-    #veil {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 42, 34, .55);
-      z-index: 20;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px
-    }
-
-    #panel {
-      background: var(--paper);
-      border-radius: 18px;
-      max-width: 560px;
-      width: 100%;
-      max-height: 88vh;
-      overflow: auto;
-      padding: 20px 22px;
-      position: relative
-    }
-
-    #panel h2 {
-      margin: 0 0 .6em;
-      font-size: 1.3rem
-    }
-
-    #panel .x {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      background: var(--mint);
-      color: var(--ink);
-      padding: .3em .7em
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-top: 1px solid #d6eadd
-    }
-
-    .row:first-of-type {
-      border-top: 0
-    }
-
-    .tag {
-      font-size: .75rem;
-      background: var(--mint);
-      border-radius: 99px;
-      padding: .15em .7em;
-      margin-right: 4px
-    }
-
-    .tag.sp {
-      background: var(--sun)
-    }
-
-    .sm {
-      font-size: .85rem;
-      opacity: .8
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px
-    }
-
-    .bin {
-      padding: 14px 6px;
-      color: #fff;
-      font-weight: 600;
-      border-radius: 12px
-    }
-
-    .ok {
-      color: var(--leaf);
-      font-weight: 600
-    }
-
-    .no {
-      color: var(--coral);
-      font-weight: 600
-    }
-
-    label {
-      display: block;
-      margin: .6em 0 .2em;
-      font-size: .9rem;
-      font-weight: 500
-    }
-
-    /* ===== GREEN CAMPUS SPLASH SCREEN ===== */
-    #splash {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: linear-gradient(145deg, #d9f2e1, #bfe6f5, #f7fcf8);
-      transition: opacity .6s ease, visibility .6s ease;
-    }
-
-    #splash.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .splash-content {
-      text-align: center;
-      animation: splashFloat 2s ease-in-out infinite;
-    }
-
-    .splash-logo {
-      font-size: 75px;
-      margin-bottom: 10px;
-    }
-
-    .splash-title {
-      font-size: 30px;
-      font-weight: 600;
-      color: #176b3b;
-      letter-spacing: 2px;
-    }
-
-    .splash-subtitle {
-      color: #38764f;
-      margin-top: 5px;
-      font-size: 14px;
-    }
-
-    .splash-spinner {
-      width: 48px;
-      height: 48px;
-      border: 5px solid #bde8ca;
-      border-top-color: #2f9e5b;
-      border-radius: 50%;
-      animation: splashSpin .8s linear infinite;
-      margin: 35px auto 18px;
-    }
-
-    .splash-progress {
-      width: 220px;
-      height: 8px;
-      border-radius: 20px;
-      background: #c5e5ce;
-      overflow: hidden;
-      margin: auto;
-    }
-
-    .splash-progress i {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: #2f9e5b;
-      border-radius: 20px;
-      transition: width .35s ease;
-    }
-
-    .splash-percent {
-      margin-top: 9px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #176b3b;
-    }
-
-    .splash-status {
-      margin-top: 15px;
-      font-size: 13px;
-      color: #38764f;
-    }
-
-    .splash-version {
-      position: absolute;
-      bottom: 25px;
-      font-size: 11px;
-      color: #668b72;
-    }
-
-    @keyframes splashSpin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes splashFloat {
-
-      0%,
-      100% {
-        transform: translateY(0);
+      .hud {
+        position: fixed;
+        z-index: 5;
+        pointer-events: none
       }
 
-      50% {
-        transform: translateY(-8px);
+      #stat {
+        top: max(10px, env(safe-area-inset-top));
+        left: 10px;
+        background: var(--paper);
+        border-radius: var(--r);
+        padding: 10px 14px;
+        min-width: 210px;
+        box-shadow: 0 2px 0 rgba(15, 42, 34, .15)
       }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
+      #stat b {
+        font-weight: 600
+      }
 
-      #splash,
-      .splash-content,
-      .splash-spinner,
+      .bar {
+        height: 8px;
+        background: var(--mint);
+        border-radius: 5px;
+        margin: 6px 0;
+        overflow: hidden
+      }
+
+      .bar i {
+        display: block;
+        height: 100%;
+        background: var(--leaf)
+      }
+
+      #stat .m {
+        display: flex;
+        gap: 14px;
+        font-size: .9rem
+      }
+
+      #mini {
+        top: max(10px, env(safe-area-inset-top));
+        right: 10px;
+        border-radius: 50%;
+        border: 4px solid var(--paper);
+        background: #9fd3a8;
+        width: 132px;
+        height: 132px;
+        overflow: hidden
+      }
+
+      #menu {
+        bottom: max(12px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        pointer-events: auto;
+        background: var(--paper);
+        padding: 6px;
+        border-radius: var(--r);
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 96vw
+      }
+
+      #menu button {
+        background: transparent;
+        color: var(--ink);
+        padding: .45em .8em
+      }
+
+      #menu button:hover {
+        background: var(--mint)
+      }
+
+      #hint {
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: #fff;
+        padding: .5em 1em;
+        border-radius: 99px;
+        display: none
+      }
+
+      #toast {
+        z-index: 30;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: #fff;
+        padding: .6em 1.1em;
+        border-radius: 12px;
+        display: none;
+        max-width: 90vw;
+        text-align: center
+      }
+
+      #pad {
+        position: fixed;
+        left: 18px;
+        bottom: 90px;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .35);
+        display: none;
+        z-index: 5;
+        touch-action: none
+      }
+
+      #pad i {
+        position: absolute;
+        left: 35px;
+        top: 35px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--paper)
+      }
+
+      @media (pointer:coarse) {
+        #pad {
+          display: block
+        }
+      }
+
+      #veil {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 42, 34, .55);
+        z-index: 20;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 12px
+      }
+
+      #panel {
+        background: var(--paper);
+        border-radius: 18px;
+        max-width: 560px;
+        width: 100%;
+        max-height: 88vh;
+        overflow: auto;
+        padding: 20px 22px;
+        position: relative
+      }
+
+      #panel h2 {
+        margin: 0 0 .6em;
+        font-size: 1.3rem
+      }
+
+      #panel .x {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        background: var(--mint);
+        color: var(--ink);
+        padding: .3em .7em
+      }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-top: 1px solid #d6eadd
+      }
+
+      .row:first-of-type {
+        border-top: 0
+      }
+
+      .tag {
+        font-size: .75rem;
+        background: var(--mint);
+        border-radius: 99px;
+        padding: .15em .7em;
+        margin-right: 4px
+      }
+
+      .tag.sp {
+        background: var(--sun)
+      }
+
+      .sm {
+        font-size: .85rem;
+        opacity: .8
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px
+      }
+
+      .bin {
+        padding: 14px 6px;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 12px
+      }
+
+      .ok {
+        color: var(--leaf);
+        font-weight: 600
+      }
+
+      .no {
+        color: var(--coral);
+        font-weight: 600
+      }
+
+      label {
+        display: block;
+        margin: .6em 0 .2em;
+        font-size: .9rem;
+        font-weight: 500
+      }
+
+      /* ===== GREEN CAMPUS SPLASH SCREEN ===== */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: linear-gradient(145deg, #d9f2e1, #bfe6f5, #f7fcf8);
+        transition: opacity .6s ease, visibility .6s ease;
+      }
+
+      #splash.hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .splash-content {
+        text-align: center;
+        animation: splashFloat 2s ease-in-out infinite;
+      }
+
+      .splash-logo {
+        font-size: 75px;
+        margin-bottom: 10px;
+      }
+
+      .splash-title {
+        font-size: 30px;
+        font-weight: 600;
+        color: #176b3b;
+        letter-spacing: 2px;
+      }
+
+      .splash-subtitle {
+        color: #38764f;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+      .splash-spinner {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #bde8ca;
+        border-top-color: #2f9e5b;
+        border-radius: 50%;
+        animation: splashSpin .8s linear infinite;
+        margin: 35px auto 18px;
+      }
+
+      .splash-progress {
+        width: 220px;
+        height: 8px;
+        border-radius: 20px;
+        background: #c5e5ce;
+        overflow: hidden;
+        margin: auto;
+      }
+
       .splash-progress i {
-        animation: none;
-        transition: none;
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: #2f9e5b;
+        border-radius: 20px;
+        transition: width .35s ease;
       }
-    }
-  </style>
-</head>
 
-<body>
+      .splash-percent {
+        margin-top: 9px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #176b3b;
+      }
 
-  <!-- GREEN CAMPUS SPLASH SCREEN -->
-  <div id="splash">
-    <div class="splash-content">
+      .splash-status {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #38764f;
+      }
 
-      <div class="splash-logo">🌱</div>
+      .splash-version {
+        position: absolute;
+        bottom: 25px;
+        font-size: 11px;
+        color: #668b72;
+      }
 
-      <div class="splash-title">GREEN CAMPUS</div>
+      @keyframes splashSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
 
-      <div class="splash-subtitle">A Little Green World</div>
+      @keyframes splashFloat {
 
-      <div class="splash-spinner"></div>
+        0%,
+        100% {
+          transform: translateY(0);
+        }
 
-      <div class="splash-progress">
-        <i id="splashBar"></i>
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+
+        #splash,
+        .splash-content,
+        .splash-spinner,
+        .splash-progress i {
+          animation: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- GREEN CAMPUS SPLASH SCREEN -->
+    <div id="splash">
+      <div class="splash-content">
+
+        <div class="splash-logo">🌱</div>
+
+        <div class="splash-title">GREEN CAMPUS</div>
+
+        <div class="splash-subtitle">A Little Green World</div>
+
+        <div class="splash-spinner"></div>
+
+        <div class="splash-progress">
+          <i id="splashBar"></i>
+        </div>
+
+        <div class="splash-percent" id="splashPercent">0%</div>
+
+        <div class="splash-status" id="splashStatus">กำลังเตรียมโลกสีเขียว...</div>
+
       </div>
 
-      <div class="splash-percent" id="splashPercent">0%</div>
-
-      <div class="splash-status" id="splashStatus">กำลังเตรียมโลกสีเขียว...</div>
-
+      <div class="splash-version">GREEN CAMPUS · VERSION 1.0</div>
     </div>
 
-    <div class="splash-version">GREEN CAMPUS · VERSION 1.0</div>
-  </div>
+    <canvas id="game"></canvas>
+    <div id="stat" class="hud"></div><canvas id="mini" class="hud" width="132" height="132"></canvas>
+    <div id="hint" class="hud"></div>
+    <div id="toast" class="hud"></div>
+    <div id="pad"><i></i></div>
+    <div id="menu" class="hud"></div>
+    <div id="veil">
+      <div id="panel" role="dialog" aria-modal="true"></div>
+    </div>
 
-  <canvas id="game"></canvas>
-  <div id="stat" class="hud"></div><canvas id="mini" class="hud" width="132" height="132"></canvas>
-  <div id="hint" class="hud"></div>
-  <div id="toast" class="hud"></div>
-  <div id="pad"><i></i></div>
-  <div id="menu" class="hud"></div>
-  <div id="veil">
-    <div id="panel" role="dialog" aria-modal="true"></div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    /* ================= API ================= */
-    let token = localStorage.getItem('gc_token'), ME = null;
-    async function api(path, opts = {}) {
-      const h = token ? { Authorization: 'Bearer ' + token } : {};
-      if (opts.body && !(opts.body instanceof FormData)) { h['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
-      const r = await fetch('/api' + path, { ...opts, headers: h });
-      const j = await r.json().catch(() => ({}));
-      if (r.status === 401 && token) { localStorage.removeItem('gc_token'); location.reload(); }
-      if (!r.ok) throw new Error(j.error || 'เกิดข้อผิดพลาด');
-      return j;
-    }
-    const $ = s => document.querySelector(s);
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    function toast(t) { const e = $('#toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 3200); }
-
-    /* ================= UI panels ================= */
-    let busy = false;
-    function openPanel(html) {
-      releaseAll(); // ล้างปุ่ม/จอย/การลากที่ค้างทุกครั้งที่เปิดหน้าต่าง
-      $('#panel').onkeydown = null;
-      $('#panel').innerHTML = '<button class="x" aria-label="ปิด" onclick="closePanel()">ปิด</button>' + html;
-      $('#veil').style.display = 'flex'; busy = true; $('#panel').scrollTop = 0;
-    }
-    function closePanel() { $('#veil').style.display = 'none'; busy = false; releaseAll(); if (token) refresh().catch(() => { }); }
-    async function refresh() { const d = await api('/me'); const prev = ME?.user.level; ME = d; renderStat(); applyOutfit(); if (prev && d.user.level > prev) toast(`🎉 เลเวลอัป! Lv.${d.user.level} ${d.user.title}`); return d; }
-    function renderStat() {
-      const u = ME.user, pct = Math.min(100, (u.exp - u.expThis) / (u.expNext - u.expThis) * 100);
-      $('#stat').innerHTML = `<b>${esc(u.name)}</b> <span class="sm">${esc(u.classroom)}</span><br><span class="sm">Lv.${u.level} ${esc(u.title)}</span>
-   <div class="bar"><i style="width:${pct}%"></i></div><div class="m"><span>🟢 ${u.points} Point</span><span>🪙 ${u.coins} Coin</span></div>`;
-    }
-    const MENU = [['📋 ภารกิจ', showMissions], ['👤 โปรไฟล์', showProfile], ['🛍️ ร้านค้า', showShop], ['🏆 อันดับ', showRank], ['🎓 ใบประกาศ', showCerts], ['🚪 ออก', logout]];
-    $('#menu').innerHTML = ''; MENU.forEach(([t, f]) => { const b = document.createElement('button'); b.textContent = t; b.onclick = f; $('#menu').appendChild(b); });
-
-    function showLogin(mode = 'login', msg = '') {
-      const legacy = mode === 'legacy';
-      const register = mode === 'register';
-
-      let fields = '';
-
-      if (legacy) {
-        fields = `
-      <label>รหัสนักศึกษาเดิม</label>
-      <input id="l_id" maxlength="11" inputmode="numeric"
-        autocomplete="username"
-        placeholder="รหัสนักศึกษา 11 หลัก">
-
-      <label>PIN เดิม</label>
-      <input id="l_pin" type="password" maxlength="6"
-        inputmode="numeric" autocomplete="current-password"
-        placeholder="PIN 4-6 หลัก">
-    `;
-      } else {
-        fields = `
-      ${register ? `
-        <label>ชื่อที่แสดงในเกม</label>
-        <input id="l_name" maxlength="30"
-          autocomplete="nickname" placeholder="ชื่อผู้เล่น">
-      ` : ''}
-
-      <label>Username</label>
-      <input id="l_username" maxlength="20"
-        autocomplete="username"
-        placeholder="เช่น green_player01">
-
-      <label>Password</label>
-      <input id="l_password" type="password" maxlength="72"
-        autocomplete="${register ? 'new-password' : 'current-password'}"
-        placeholder="${register ? 'อย่างน้อย 8 ไบต์' : 'กรอกรหัสผ่าน'}">
-
-      ${register ? `
-        <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400">
-          <input id="l_ok" type="checkbox"
-            style="width:auto;margin-top:.35em">
-          <span class="sm">
-            ฉันยินยอมให้ Green Campus จัดเก็บข้อมูลบัญชี
-            และข้อมูลความคืบหน้าในเกมเพื่อให้บริการ
-          </span>
-        </label>
-      ` : ''}
-    `;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      /* ================= API ================= */
+      let token = localStorage.getItem('gc_token'), ME = null;
+      async function api(path, opts = {}) {
+        const h = token ? { Authorization: 'Bearer ' + token } : {};
+        if (opts.body && !(opts.body instanceof FormData)) { h['Content-Type'] = 'application/json'; opts.body = JSON.stringify(opts.body); }
+        const r = await fetch('/api' + path, { ...opts, headers: h });
+        const j = await r.json().catch(() => ({}));
+        if (r.status === 401 && token) { localStorage.removeItem('gc_token'); location.reload(); }
+        if (!r.ok) throw new Error(j.error || 'เกิดข้อผิดพลาด');
+        return j;
       }
+      const $ = s => document.querySelector(s);
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      function toast(t) { const e = $('#toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = 'none', 3200); }
 
-      openPanel(`
-    <div style="text-align:center;margin-bottom:18px">
-      <div style="font-size:3rem">🌱</div>
-      <h2 style="margin-bottom:4px">
-        ${legacy ? 'บัญชีผู้เล่นเดิม' :
-          register ? 'สร้างบัญชีผู้เล่น' : 'Green Campus'}
-      </h2>
-      <p class="sm">
-        ${legacy
-          ? 'เข้าสู่ระบบด้วยรหัสนักศึกษาและ PIN เดิม'
-          : register
-            ? 'เริ่มต้นการผจญภัยใน Green Campus'
-            : 'ยินดีต้อนรับกลับสู่มหาวิทยาลัยสีเขียว'}
-      </p>
-    </div>
+      /* ================= UI panels ================= */
+      let busy = false;
+      function openPanel(html) {
+        releaseAll(); // ล้างปุ่ม/จอย/การลากที่ค้างทุกครั้งที่เปิดหน้าต่าง
+        $('#panel').onkeydown = null;
+        $('#panel').innerHTML = '<button class="x" aria-label="ปิด" onclick="closePanel()">ปิด</button>' + html;
+        $('#veil').style.display = 'flex'; busy = true; $('#panel').scrollTop = 0;
+      }
+      function closePanel() { $('#veil').style.display = 'none'; busy = false; releaseAll(); if (token) refresh().catch(() => { }); }
+      async function refresh() { const d = await api('/me'); const prev = ME?.user.level; ME = d; renderStat(); applyOutfit(); if (prev && d.user.level > prev) toast(`🎉 เลเวลอัป! Lv.${d.user.level} ${d.user.title}`); return d; }
+      function renderStat() {
+        const u = ME.user, pct = Math.min(100, (u.exp - u.expThis) / (u.expNext - u.expThis) * 100);
+        $('#stat').innerHTML = `<b>${esc(u.name)}</b> <span class="sm">${esc(u.classroom)}</span><br><span class="sm">Lv.${u.level} ${esc(u.title)}</span>
+    <div class="bar"><i style="width:${pct}%"></i></div><div class="m"><span>🟢 ${u.points} Point</span><span>🪙 ${u.coins} Coin</span></div>`;
+      }
+      const MENU = [['📋 ภารกิจ', showMissions], ['👤 โปรไฟล์', showProfile], ['🛍️ ร้านค้า', showShop], ['🏆 อันดับ', showRank], ['🎓 ใบประกาศ', showCerts], ['🚪 ออก', logout]];
+      $('#menu').innerHTML = ''; MENU.forEach(([t, f]) => { const b = document.createElement('button'); b.textContent = t; b.onclick = f; $('#menu').appendChild(b); });
 
-    ${fields}
+      function showLogin(mode = 'login', msg = '') {
+        const legacy = mode === 'legacy';
+        const register = mode === 'register';
 
-    <p class="no" id="l_err">${esc(msg)}</p>
+        let fields = '';
 
-    <button style="width:100%;margin-top:12px"
-      onclick="doLogin('${mode}')">
-      ${legacy ? 'เข้าสู่ระบบบัญชีเดิม' :
-          register ? 'สร้างบัญชีและเริ่มเล่น' : 'เข้าสู่เกม'}
-    </button>
+        if (legacy) {
+          fields = `
+        <label>รหัสนักศึกษาเดิม</label>
+        <input id="l_id" maxlength="11" inputmode="numeric"
+          autocomplete="username"
+          placeholder="รหัสนักศึกษา 11 หลัก">
 
-    <div style="text-align:center;margin-top:16px">
-      ${legacy ? `
-        <button class="alt" onclick="showLogin('login')">
-          กลับไป Login แบบใหม่
-        </button>
-      ` : register ? `
-        <p class="sm">มีบัญชีแล้ว?</p>
-        <button class="alt" onclick="showLogin('login')">
-          เข้าสู่ระบบ
-        </button>
-      ` : `
-        <p class="sm">ยังไม่มีบัญชี?</p>
-        <button class="alt" onclick="showLogin('register')">
-          สร้างบัญชีใหม่
-        </button>
-        <br><br>
-        <button class="alt" onclick="showLogin('legacy')">
-          ใช้บัญชีเดิม (รหัสนักศึกษา + PIN)
-        </button>
-      `}
-    </div>
-  `);
-
-      $('#panel .x').style.display = 'none';
-
-      $('#panel').onkeydown = e => {
-        if (e.key === 'Enter') doLogin(mode);
-      };
-    }
-    function logout() { localStorage.removeItem('gc_token'); location.reload(); }
-    async function doLogin(mode = 'login') {
-      try {
-        let endpoint;
-        let body;
-
-        if (mode === 'legacy') {
-          const studentId = $('#l_id').value.trim();
-          const pin = $('#l_pin').value;
-
-          if (!/^\d{11}$/.test(studentId)) {
-            return $('#l_err').textContent =
-              'รหัสนักเรียนต้องเป็นตัวเลข 11 หลัก';
-          }
-
-          if (!/^\d{4,6}$/.test(pin)) {
-            return $('#l_err').textContent =
-              'PIN ต้องเป็นตัวเลข 4-6 หลัก';
-          }
-
-          endpoint = '/login';
-          body = { studentId, pin, consent: false };
-
+        <label>PIN เดิม</label>
+        <input id="l_pin" type="password" maxlength="6"
+          inputmode="numeric" autocomplete="current-password"
+          placeholder="PIN 4-6 หลัก">
+      `;
         } else {
-          const username = $('#l_username').value.trim();
-          const password = $('#l_password').value;
+          fields = `
+        ${register ? `
+          <label>ชื่อที่แสดงในเกม</label>
+          <input id="l_name" maxlength="30"
+            autocomplete="nickname" placeholder="ชื่อผู้เล่น">
+        ` : ''}
 
-          if (!/^[a-zA-Z0-9_.]{3,20}$/.test(username)) {
-            return $('#l_err').textContent =
-              'Username ต้องมี 3-20 ตัวอักษร';
-          }
+        <label>Username</label>
+        <input id="l_username" maxlength="20"
+          autocomplete="username"
+          placeholder="เช่น green_player01">
 
-          if (password.length < 1) {
-            return $('#l_err').textContent =
-              'กรุณากรอก Password';
-          }
+        <label>Password</label>
+        <input id="l_password" type="password" maxlength="72"
+          autocomplete="${register ? 'new-password' : 'current-password'}"
+          placeholder="${register ? 'อย่างน้อย 8 ไบต์' : 'กรอกรหัสผ่าน'}">
 
-          if (mode === 'register') {
-            const name = $('#l_name').value.trim();
+        ${register ? `
+          <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400">
+            <input id="l_ok" type="checkbox"
+              style="width:auto;margin-top:.35em">
+            <span class="sm">
+              ฉันยินยอมให้ Green Campus จัดเก็บข้อมูลบัญชี
+              และข้อมูลความคืบหน้าในเกมเพื่อให้บริการ
+            </span>
+          </label>
+        ` : ''}
+      `;
+        }
 
-            if (name.length < 2 || name.length > 30) {
+        openPanel(`
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="font-size:3rem">🌱</div>
+        <h2 style="margin-bottom:4px">
+          ${legacy ? 'บัญชีผู้เล่นเดิม' :
+            register ? 'สร้างบัญชีผู้เล่น' : 'Green Campus'}
+        </h2>
+        <p class="sm">
+          ${legacy
+            ? 'เข้าสู่ระบบด้วยรหัสนักศึกษาและ PIN เดิม'
+            : register
+              ? 'เริ่มต้นการผจญภัยใน Green Campus'
+              : 'ยินดีต้อนรับกลับสู่มหาวิทยาลัยสีเขียว'}
+        </p>
+      </div>
+
+      ${fields}
+
+      <p class="no" id="l_err">${esc(msg)}</p>
+
+      <button style="width:100%;margin-top:12px"
+        onclick="doLogin('${mode}')">
+        ${legacy ? 'เข้าสู่ระบบบัญชีเดิม' :
+            register ? 'สร้างบัญชีและเริ่มเล่น' : 'เข้าสู่เกม'}
+      </button>
+
+      <div style="text-align:center;margin-top:16px">
+        ${legacy ? `
+          <button class="alt" onclick="showLogin('login')">
+            กลับไป Login แบบใหม่
+          </button>
+        ` : register ? `
+          <p class="sm">มีบัญชีแล้ว?</p>
+          <button class="alt" onclick="showLogin('login')">
+            เข้าสู่ระบบ
+          </button>
+        ` : `
+          <p class="sm">ยังไม่มีบัญชี?</p>
+          <button class="alt" onclick="showLogin('register')">
+            สร้างบัญชีใหม่
+          </button>
+          <br><br>
+          <button class="alt" onclick="showLogin('legacy')">
+            ใช้บัญชีเดิม (รหัสนักศึกษา + PIN)
+          </button>
+        `}
+      </div>
+    `);
+
+        $('#panel .x').style.display = 'none';
+
+        $('#panel').onkeydown = e => {
+          if (e.key === 'Enter') doLogin(mode);
+        };
+      }
+      function logout() { localStorage.removeItem('gc_token'); location.reload(); }
+      async function doLogin(mode = 'login') {
+        try {
+          let endpoint;
+          let body;
+
+          if (mode === 'legacy') {
+            const studentId = $('#l_id').value.trim();
+            const pin = $('#l_pin').value;
+
+            if (!/^\d{11}$/.test(studentId)) {
               return $('#l_err').textContent =
-                'ชื่อผู้เล่นต้องมี 2-30 ตัวอักษร';
+                'รหัสนักเรียนต้องเป็นตัวเลข 11 หลัก';
             }
 
-            if (new TextEncoder().encode(password).length < 8 ||
-              new TextEncoder().encode(password).length > 72) {
+            if (!/^\d{4,6}$/.test(pin)) {
               return $('#l_err').textContent =
-                'Password ต้องมีความยาว 8-72 ไบต์';
+                'PIN ต้องเป็นตัวเลข 4-6 หลัก';
             }
 
-            if (!$('#l_ok').checked) {
-              return $('#l_err').textContent =
-                'กรุณายอมรับเงื่อนไขก่อนสมัคร';
-            }
-
-            endpoint = '/register';
-            body = { username, password, name, consent: true };
+            endpoint = '/login';
+            body = { studentId, pin, consent: false };
 
           } else {
-            endpoint = '/player/login';
-            body = { username, password };
+            const username = $('#l_username').value.trim();
+            const password = $('#l_password').value;
+
+            if (!/^[a-zA-Z0-9_.]{3,20}$/.test(username)) {
+              return $('#l_err').textContent =
+                'Username ต้องมี 3-20 ตัวอักษร';
+            }
+
+            if (password.length < 1) {
+              return $('#l_err').textContent =
+                'กรุณากรอก Password';
+            }
+
+            if (mode === 'register') {
+              const name = $('#l_name').value.trim();
+
+              if (name.length < 2 || name.length > 30) {
+                return $('#l_err').textContent =
+                  'ชื่อผู้เล่นต้องมี 2-30 ตัวอักษร';
+              }
+
+              if (new TextEncoder().encode(password).length < 8 ||
+                new TextEncoder().encode(password).length > 72) {
+                return $('#l_err').textContent =
+                  'Password ต้องมีความยาว 8-72 ไบต์';
+              }
+
+              if (!$('#l_ok').checked) {
+                return $('#l_err').textContent =
+                  'กรุณายอมรับเงื่อนไขก่อนสมัคร';
+              }
+
+              endpoint = '/register';
+              body = { username, password, name, consent: true };
+
+            } else {
+              endpoint = '/player/login';
+              body = { username, password };
+            }
+          }
+
+          const btn = $('#panel button:not(.x)');
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'กำลังดำเนินการ...';
+          }
+
+          const r = await api(endpoint, {
+            method: 'POST',
+            body
+          });
+
+          token = r.token;
+          localStorage.setItem('gc_token', token);
+
+          busy = false;
+          $('#veil').style.display = 'none';
+
+          await refresh();
+
+          if (r.isNew || !localStorage.getItem('gc_tut')) {
+            startTutorial();
+          }
+
+        } catch (e) {
+          const error = $('#l_err');
+          if (error) error.textContent = e.message;
+
+          const btn = $('#panel button:not(.x)');
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = mode === 'register'
+              ? 'สร้างบัญชีและเริ่มเล่น'
+              : mode === 'legacy'
+                ? 'เข้าสู่ระบบบัญชีเดิม'
+                : 'เข้าสู่เกม';
           }
         }
+      }
+      function startTutorial() {
+        if (localStorage.getItem('gc_tut')) return; localStorage.setItem('gc_tut', 1);
+        openPanel(`<h2>ยินดีต้อนรับ 🌱</h2><p>เดินด้วย <b>WASD</b> หรือปุ่มลูกศร (มือถือใช้จอยซ้ายล่าง) และลากเมาส์/นิ้วบนฉากเพื่อหมุนกล้อง ไปคุยกับ <b>ครู</b> เพื่อรับภารกิจ เดินไปที่ <b>จุดคัดแยกขยะ</b> เพื่อเรียนรู้และเล่นเกม และไปที่ <b>ร้านค้า</b> เพื่อแลกของรางวัล</p>
+    <p>เกมให้คะแนนน้อยกว่ากิจกรรมจริง ลองทำภารกิจจริงแล้วส่งรูปหลักฐานดูนะ</p><button onclick="closePanel()">เริ่มเลย</button>`);
+      }
 
-        const btn = $('#panel button:not(.x)');
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = 'กำลังดำเนินการ...';
-        }
-
-        const r = await api(endpoint, {
-          method: 'POST',
-          body
+      async function showMissions() {
+        const ms = await api('/missions'); window._ms = ms; const T = { daily: 'ประจำวัน', weekly: 'ประจำสัปดาห์', special: 'พิเศษ' };
+        openPanel('<h2>ภารกิจ</h2>' + ms.map(m => `<div class="row"><div><span class="tag ${m.type === 'special' ? 'sp' : ''}">${T[m.type]}</span><b>${esc(m.title)}</b>
+      <div class="sm">${esc(m.description)}</div><div class="sm">+${m.points} Point · +${m.coins} Coin · +${m.exp} EXP${m.certificate ? ' · 🎓 ใบประกาศ' : ''} · ทำแล้ว ${m.used}/${m.limit}</div></div>
+      <button ${m.used >= m.limit ? 'disabled' : ''} onclick="startSubmit(${m.id})">ส่งหลักฐาน</button></div>`).join(''));
+      }
+      function startSubmit(id, title = window._ms.find(m => m.id === id)?.title || '') {
+        openPanel(`<h2>ส่งหลักฐาน: ${esc(title)}</h2><p class="sm">ถ่ายรูปกิจกรรมจริงให้เห็นชัด AI จะตรวจเบื้องต้น ถ้าไม่มั่นใจจะส่งให้ครูตรวจ</p>
+    <input id="f" type="file" accept="image/*" capture="environment"><p class="no" id="u_err"></p><button id="go" onclick="doSubmit(${id})">ส่งให้ AI ตรวจ</button>`);
+      }
+      function shrink(file, max = 1280) { // ลดขนาดรูปก่อนอัปโหลด (เร็วขึ้น และอยู่ในขีดจำกัดของ AI)
+        return new Promise((ok, bad) => {
+          const img = new Image(); img.onload = () => {
+            const k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas');
+            c.width = img.width * k; c.height = img.height * k; c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            c.toBlob(b => b ? ok(b) : bad(new Error('อ่านรูปไม่ได้')), 'image/jpeg', .85);
+          };
+          img.onerror = () => bad(new Error('ไฟล์นี้ไม่ใช่รูปภาพ')); img.src = URL.createObjectURL(file);
         });
-
-        token = r.token;
-        localStorage.setItem('gc_token', token);
-
-        busy = false;
-        $('#veil').style.display = 'none';
-
-        await refresh();
-
-        if (r.isNew || !localStorage.getItem('gc_tut')) {
-          startTutorial();
-        }
-
-      } catch (e) {
-        const error = $('#l_err');
-        if (error) error.textContent = e.message;
-
-        const btn = $('#panel button:not(.x)');
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = mode === 'register'
-            ? 'สร้างบัญชีและเริ่มเล่น'
-            : mode === 'legacy'
-              ? 'เข้าสู่ระบบบัญชีเดิม'
-              : 'เข้าสู่เกม';
-        }
       }
-    }
-    function startTutorial() {
-      if (localStorage.getItem('gc_tut')) return; localStorage.setItem('gc_tut', 1);
-      openPanel(`<h2>ยินดีต้อนรับ 🌱</h2><p>เดินด้วย <b>WASD</b> หรือปุ่มลูกศร (มือถือใช้จอยซ้ายล่าง) และลากเมาส์/นิ้วบนฉากเพื่อหมุนกล้อง ไปคุยกับ <b>ครู</b> เพื่อรับภารกิจ เดินไปที่ <b>จุดคัดแยกขยะ</b> เพื่อเรียนรู้และเล่นเกม และไปที่ <b>ร้านค้า</b> เพื่อแลกของรางวัล</p>
-   <p>เกมให้คะแนนน้อยกว่ากิจกรรมจริง ลองทำภารกิจจริงแล้วส่งรูปหลักฐานดูนะ</p><button onclick="closePanel()">เริ่มเลย</button>`);
-    }
+      async function doSubmit(id) {
+        const f = $('#f').files[0]; if (!f) return $('#u_err').textContent = 'กรุณาเลือกรูปก่อน';
+        const go = $('#go'); go.disabled = true; go.textContent = 'AI กำลังตรวจ…';
+        try {
+          const fd = new FormData(); fd.append('missionId', id); fd.append('image', await shrink(f), 'evidence.jpg');
+          const r = await api('/submissions', { method: 'POST', body: fd });
+          const msg = {
+            approved: `<p class="ok">✅ ผ่าน! +${r.reward?.points} Point · +${r.reward?.coins} Coin · +${r.reward?.exp} EXP</p>${r.certificate ? '<p>🎓 ได้รับใบประกาศ ดูได้ที่เมนู "ใบประกาศ"</p>' : ''}`,
+            rejected: '<p class="no">⚠️ กรุณาส่งหลักฐานใหม่</p>', needs_review: '<p>🕒 AI ไม่มั่นใจ ส่งให้ครูตรวจแล้ว ได้คะแนนเมื่อครูอนุมัติ</p>'
+          }[r.status];
+          openPanel(`<h2>ผลการตรวจ</h2>${msg}<p class="sm">${esc(r.reason)}</p><button onclick="closePanel()">ตกลง</button>`);
+        } catch (e) { go.disabled = false; go.textContent = 'ส่งให้ AI ตรวจ'; $('#u_err').textContent = e.message; }
+      }
 
-    async function showMissions() {
-      const ms = await api('/missions'); window._ms = ms; const T = { daily: 'ประจำวัน', weekly: 'ประจำสัปดาห์', special: 'พิเศษ' };
-      openPanel('<h2>ภารกิจ</h2>' + ms.map(m => `<div class="row"><div><span class="tag ${m.type === 'special' ? 'sp' : ''}">${T[m.type]}</span><b>${esc(m.title)}</b>
-    <div class="sm">${esc(m.description)}</div><div class="sm">+${m.points} Point · +${m.coins} Coin · +${m.exp} EXP${m.certificate ? ' · 🎓 ใบประกาศ' : ''} · ทำแล้ว ${m.used}/${m.limit}</div></div>
-    <button ${m.used >= m.limit ? 'disabled' : ''} onclick="startSubmit(${m.id})">ส่งหลักฐาน</button></div>`).join(''));
-    }
-    function startSubmit(id, title = window._ms.find(m => m.id === id)?.title || '') {
-      openPanel(`<h2>ส่งหลักฐาน: ${esc(title)}</h2><p class="sm">ถ่ายรูปกิจกรรมจริงให้เห็นชัด AI จะตรวจเบื้องต้น ถ้าไม่มั่นใจจะส่งให้ครูตรวจ</p>
-   <input id="f" type="file" accept="image/*" capture="environment"><p class="no" id="u_err"></p><button id="go" onclick="doSubmit(${id})">ส่งให้ AI ตรวจ</button>`);
-    }
-    function shrink(file, max = 1280) { // ลดขนาดรูปก่อนอัปโหลด (เร็วขึ้น และอยู่ในขีดจำกัดของ AI)
-      return new Promise((ok, bad) => {
-        const img = new Image(); img.onload = () => {
-          const k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas');
-          c.width = img.width * k; c.height = img.height * k; c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-          c.toBlob(b => b ? ok(b) : bad(new Error('อ่านรูปไม่ได้')), 'image/jpeg', .85);
+      async function showProfile() {
+        const hist = await api('/submissions/mine').catch(() => []); const SL = { approved: '✅ ผ่าน', rejected: '⚠️ ส่งใหม่', needs_review: '🕒 รอครูตรวจ' };
+        const u = ME.user, o = u.outfit;
+        openPanel(`<h2>โปรไฟล์</h2><p><b>Lv.${u.level} ${esc(u.title)}</b> · EXP ${u.exp}/${u.expNext}</p>
+    <h3>🌍 ผลกระทบที่คุณสร้างให้วิทยาลัย</h3>${ME.impact.length ? ME.impact.map(i => `<div class="row"><span>${esc(i.category)}</span><b>${i.count} ครั้ง${i.unit !== 'ครั้ง' ? ` · ${i.total} ${esc(i.unit)}` : ''}</b></div>`).join('') : '<p class="sm">ยังไม่มีข้อมูล ลองทำภารกิจแรกดู</p>'}
+    <h3>🏅 เหรียญตรา</h3>${ME.badges.map(b => `<div class="row"><span>${b.earned ? b.name : '🔒 ' + b.name}<div class="sm">${b.desc}</div></span><span class="sm">${b.have}/${b.need}</span></div>`).join('')}
+    <h3>🧾 ประวัติการส่งหลักฐาน</h3>${hist.slice(0, 8).map(h => `<div class="row"><span>${esc(h.title)}<div class="sm">${esc(h.created_at)} UTC</div></span><span>${SL[h.status] || h.status}</span></div>`).join('') || '<p class="sm">ยังไม่เคยส่ง</p>'}
+    <h3>👕 ตัวละคร</h3><label>เพศ/รูปลักษณ์</label><select id="o_g"><option value="f">หญิง</option><option value="m">ชาย</option></select>
+    <label>สีผม</label><input id="o_h" type="color" value="${o.hair}"><label>สีเสื้อ</label><input id="o_s" type="color" value="${o.shirt}">
+    <label>สีกางเกง/กระโปรง</label><input id="o_p" type="color" value="${o.pants}"><br><br><button onclick="saveOutfit()">บันทึกชุด</button>`);
+        $('#o_g').value = o.gender;
+      }
+      async function saveOutfit() { try { await api('/outfit', { method: 'POST', body: { gender: $('#o_g').value, hair: $('#o_h').value, shirt: $('#o_s').value, pants: $('#o_p').value } }); closePanel(); toast('บันทึกชุดแล้ว'); } catch (e) { toast(e.message); } }
+
+      async function showShop() {
+        const rs = await api('/rewards'), mine = await api('/redemptions/mine').catch(() => []); const RL = { pending: '🕒 รอรับของที่ครู', given: '✅ รับแล้ว', cancelled: '↩️ ยกเลิก (คืนคะแนนแล้ว)' };
+        openPanel(`<h2>ร้านแลกของรางวัล</h2><p class="sm">ใช้ Green Point (คุณมี ${ME.user.points})</p>` + rs.map(r => `<div class="row"><div><b>${esc(r.name)}</b><div class="sm">${r.cost} Point · เหลือ ${r.stock}</div></div>
+    <button ${r.stock < 1 || ME.user.points < r.cost ? 'disabled' : ''} onclick="redeem(${r.id})">แลก</button></div>`).join('') + '<h3>ประวัติการแลก</h3>' + (mine.map(d => `<div class="row"><span>${esc(d.name)}<div class="sm">${esc(d.created_at)} UTC</div></span><span class="sm">${RL[d.status] || d.status}</span></div>`).join('') || '<p class="sm">ยังไม่เคยแลก</p>'));
+      }
+      async function redeem(id) { if (!confirm('ยืนยันการแลกของรางวัลนี้? คะแนนจะถูกหักทันที')) return; try { const r = await api(`/rewards/${id}/redeem`, { method: 'POST' }); await refresh(); toast(`แลก "${r.name}" สำเร็จ รับของที่ครู`); showShop(); } catch (e) { toast(e.message); } }
+      async function showRank() {
+        const d = await api('/leaderboard');
+        openPanel(`<h2>อันดับ</h2><h3>🏫 ห้องเรียน</h3>${d.classes.map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.name)} <span class="sm">(${c.n} คน)</span></span><b>${c.p}</b></div>`).join('') || '<p class="sm">ยังไม่มีข้อมูล</p>'}
+    <h3>👤 นักเรียน</h3>${d.users.map((u, i) => `<div class="row"><span>${i + 1}. ${esc(u.name)} <span class="sm">${esc(u.classroom)}</span></span><b>${u.p}</b></div>`).join('')}`);
+      }
+      async function showCerts() {
+        const cs = await api('/certificates/mine');
+        openPanel('<h2>ใบประกาศของฉัน</h2>' + (cs.map(c => `<div class="row"><div><b>${esc(c.title)}</b><div class="sm">${esc(c.serial)}</div></div>
+    <button onclick="dlCert('${esc(c.serial)}')">ดาวน์โหลด PDF</button></div>`).join('') || '<p class="sm">ผ่านภารกิจที่มี 🎓 เพื่อรับใบประกาศ</p>'));
+      }
+      // ดาวน์โหลด PDF โดยแนบ Authorization header (ลิงก์ <a href> ธรรมดาไม่ส่ง token)
+      async function dlCert(serial) {
+        try {
+          const r = await fetch('/api/certificates/' + encodeURIComponent(serial) + '/pdf', { headers: { Authorization: 'Bearer ' + token } });
+          if (!r.ok) throw new Error('ดาวน์โหลดไม่สำเร็จ');
+          const url = URL.createObjectURL(await r.blob());
+          const a = document.createElement('a'); a.href = url; a.download = serial + '.pdf'; document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+        } catch (e) { toast(e.message); }
+      }
+
+      /* ===== เรียนรู้ → เล่น → ทดสอบ ===== */
+      async function startLesson(key) {
+        const L = await api('/lesson/' + key); L.key = key; let p = 0;
+        const page = () => {
+          if (p >= L.pages.length) return sortGame(L); const g = L.pages[p];
+          openPanel(`<h2>รู้ก่อนเล่น: ${esc(L.title)} (${p + 1}/${L.pages.length})</h2><h3>${esc(g.h)}</h3><p>${esc(g.t)}</p><button onclick="window._n()">${p + 1 === L.pages.length ? 'เริ่มเล่นเกม' : 'ถัดไป'}</button>`);
         };
-        img.onerror = () => bad(new Error('ไฟล์นี้ไม่ใช่รูปภาพ')); img.src = URL.createObjectURL(file);
+        window._n = () => { p++; page(); }; page();
+      }
+      const BINS = { green: ['เขียว (เปียก)', '#2f9e5b'], yellow: ['เหลือง (รีไซเคิล)', '#d9a400'], blue: ['ฟ้า (ทั่วไป)', '#3b83c4'], red: ['แดง (อันตราย)', '#e8554a'] };
+      function sortGame(L) {
+        const items = [...L.items].sort(() => Math.random() - .5), picks = {}; let i = 0;
+        window._pick = b => { picks[items[i].n] = b; i++; step(); };
+        const step = () => {
+          if (i >= items.length) return quiz(L, picks);
+          openPanel(`<h2>เกมแยกขยะ (${i + 1}/${items.length})</h2><p style="font-size:3rem;margin:.2em 0;text-align:center">${items[i].e}</p><p style="text-align:center"><b>${esc(items[i].n)}</b> ทิ้งถังไหน?</p>
+      <div class="grid">${Object.entries(BINS).map(([k, [n, c]]) => `<button class="bin" style="background:${c}" onclick="_pick('${k}')">${n}</button>`).join('')}</div>`);
+        };
+        step();
+      }
+      function quiz(L, picks) {
+        const answers = []; let q = 0; window._ans = a => { answers.push(a); q++; step(); };
+        const step = async () => {
+          if (q >= L.quiz.length) { // ส่งคำตอบให้เซิร์ฟเวอร์ตรวจและให้คะแนน (เฉลยไม่อยู่ในเบราว์เซอร์)
+            try {
+              const r = await api(`/lesson/${L.key}/submit`, { method: 'POST', body: { sort: picks, quiz: answers } });
+              openPanel(`<h2>สรุปผล</h2><p>แยกขยะถูก ${r.sortRight}/${r.sortTotal} · Quiz ถูก ${r.quizRight}/${r.quizTotal}</p><p class="ok">+${r.points} Point · +${r.coins} Coin · +${r.exp} EXP</p>
+            ${r.capped ? '<p class="sm">ถึงเพดานคะแนนเกมของวันนี้แล้ว ลองทำกิจกรรมจริงเพื่อรับคะแนนมากกว่า</p>' : ''}<button onclick="closePanel()">ปิด</button>`);
+            } catch (e) { toast(e.message); closePanel(); } return;
+          }
+          const Q = L.quiz[q]; openPanel(`<h2>ทดสอบความรู้ (${q + 1}/${L.quiz.length})</h2><p><b>${esc(Q.q)}</b></p><div class="grid">${Q.c.map((c, k) => `<button class="alt" onclick="_ans(${k})">${esc(c)}</button>`).join('')}</div>`);
+        };
+        step();
+      }
+      /* ===== NPC ===== */
+      const NPC_TALK = {
+        teacher: ['ครูใจดี', 'วันนี้มีภารกิจรอเธออยู่ ทำกิจกรรมจริงแล้วส่งรูปหลักฐานมาได้เลย', showMissions],
+        gardener: ['พี่สวน', 'ต้นไม้ปลูกด้วยใจ ปลูกต้นไม้จริง 1 ต้น แล้วถ่ายรูปส่งภารกิจ "ปลูกต้นไม้" ได้เลย!', showMissions],
+        mascot: ['น้องใบไม้ 🍃', 'สวัสดี! เก็บ EXP จนเลเวลสูงขึ้นจะปลดล็อกตำแหน่งใหม่ ๆ นะ', showProfile],
+      };
+      function talk(k) { const [n, t, f] = NPC_TALK[k]; openPanel(`<h2>${n}</h2><p>${t}</p><button onclick="closePanel();NPC_TALK['${k}'][2]()">ไปต่อ</button>`); }
+
+      /* ================= 3D WORLD ================= */
+      const canvas = $('#game'), renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); canvas.style.touchAction = 'none';
+      const scene = new THREE.Scene(); scene.background = new THREE.Color(0xbfe6f5); scene.fog = new THREE.Fog(0xbfe6f5, 40, 110);
+      const cam = new THREE.PerspectiveCamera(55, 1, .1, 200);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x7bbf86, .95));
+      const sun = new THREE.DirectionalLight(0xfff2cc, .7); sun.position.set(20, 40, 10); scene.add(sun);
+      const WORLD = 36; // ครึ่งหนึ่งของความกว้างพื้นที่
+      const COLL = [];  // วัตถุที่เดินทะลุไม่ได้: กล่อง {x,z,hw,hd} หรือวงกลม {x,z,r}
+      const box = (w, h, d, c, x, y, z) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), new THREE.MeshLambertMaterial({ color: c })); m.position.set(x, y, z); scene.add(m); return m; };
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(WORLD * 2, WORLD * 2), new THREE.MeshLambertMaterial({ color: 0x8fd19e })); ground.rotation.x = -Math.PI / 2; scene.add(ground);
+      box(5, .05, WORLD * 2, 0xe9e2cf, 0, .03, 0); box(WORLD * 2, .05, 5, 0xe9e2cf, 0, .03, 0); // ทางเดิน
+      function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+      const rand = rng(20260); // สุ่มแบบคงที่ ต้นไม้อยู่ที่เดิมทุกครั้งที่เปิดเกม
+      function tree(x, z) { box(.5, 2, .5, 0x7a5236, x, 1, z); const t = new THREE.Mesh(new THREE.ConeGeometry(1.7, 4, 8), new THREE.MeshLambertMaterial({ color: 0x2f8f4e })); t.position.set(x, 4, z); scene.add(t); COLL.push({ x, z, r: .5 }); }
+      // โซน: [ชื่อ, x, z, สี, ขนาด[กว้าง,สูง,ลึก]]
+      const ZONES = [
+        ['อาคารเรียน', -22, -20, 0xf2d7a1, [12, 7, 8]], ['จุดคัดแยกขยะ', 20, -18, 0x2f9e5b, [6, 2.5, 3]],
+        ['ร้านค้าแลกของรางวัล', 22, 20, 0xffc83d, [7, 4, 5]], ['Game Zone', -22, 20, 0xb085f5, [8, 4, 6]],
+        ['ลานกิจกรรม', 0, -26, 0xe8554a, [8, .4, 8]], ['จุดประหยัดพลังงาน', -8, 26, 0xf7e04b, [4, 3, 3]],
+      ];
+      ZONES.forEach(([n, x, z, c, s]) => { box(...s, c, x, s[1] / 2, z); if (s[1] > 1) COLL.push({ x, z, hw: s[0] / 2, hd: s[2] / 2 }); });
+      // จุดโต้ตอบ: NPC (มี npc) และจุดในแผนที่ (มีวงแหวนเหลือง)
+      const SPOTS = [
+        { name: 'ครูใจดี (คุยเพื่อรับภารกิจ)', short: 'ครูใจดี', x: -14, z: -10, act: () => talk('teacher'), npc: 0xffffff },
+        { name: 'พี่สวน (ปลูกต้นไม้)', short: 'พี่สวน', x: 8, z: 12, act: () => talk('gardener'), npc: 0xc7a46b },
+        { name: 'น้องใบไม้ มาสคอต', short: 'น้องใบไม้', x: 4, z: -4, act: () => talk('mascot'), npc: 0x7ee08a },
+        { name: 'จุดคัดแยกขยะ (เรียน + เล่นเกม)', x: 20, z: -14, act: () => startLesson('waste') },
+        { name: 'ร้านค้าแลกของรางวัล', x: 22, z: 15, act: showShop },
+        { name: 'Game Zone (เกมแยกขยะ)', x: -22, z: 14, act: () => startLesson('waste') },
+        { name: 'จุดประหยัดพลังงาน (ภารกิจปิดไฟ)', x: -8, z: 21, act: showMissions },
+        { name: 'ลานกิจกรรม (ภารกิจพิเศษ)', x: 0, z: -20, act: showMissions },
+      ];
+      for (let i = 0; i < 70 && COLL.filter(c => c.r).length < 40; i++) {
+        const x = (rand() - .5) * 2 * (WORLD - 3), z = (rand() - .5) * 2 * (WORLD - 3);
+        if (Math.abs(x) > 4 && Math.abs(z) > 4 && !ZONES.some(q => Math.hypot(q[1] - x, q[2] - z) < 9) && !SPOTS.some(q => Math.hypot(q.x - x, q.z - z) < 4.5)) tree(x, z);
+      }
+      function person(colors) { // ตัวละครสไตล์การ์ตูนจากรูปทรงพื้นฐาน (เปลี่ยนเป็นโมเดล VRoid ได้ภายหลัง)
+        const g = new THREE.Group(), mat = c => new THREE.MeshLambertMaterial({ color: c });
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(.45, .5, 1.1, 12), mat(colors.shirt)); body.position.y = 1.35;
+        const legs = new THREE.Mesh(new THREE.CylinderGeometry(.4, .42, .8, 12), mat(colors.pants)); legs.position.y = .5;
+        const head = new THREE.Mesh(new THREE.SphereGeometry(.55, 16, 12), mat(0xffdcb8)); head.position.y = 2.35;
+        const hair = new THREE.Mesh(new THREE.SphereGeometry(.6, 16, 12, 0, Math.PI * 2, 0, Math.PI * .6), mat(colors.hair)); hair.position.y = 2.42;
+        const tail = new THREE.Mesh(new THREE.SphereGeometry(.28, 10, 8), mat(colors.hair)); tail.position.set(0, 2.1, -.55); tail.scale.set(1, 1.8, 1);
+        [-.2, .2].forEach(x => { const e = new THREE.Mesh(new THREE.SphereGeometry(.07, 8, 6), mat(0x222222)); e.position.set(x, 2.38, .5); g.add(e); });
+        g.add(body, legs, head, hair, tail); g.userData = { body, legs, hair, tail }; return g;
+      }
+      SPOTS.forEach(s => {
+        if (s.npc) { const p = person({ shirt: s.npc, pants: 0x556b8a, hair: 0x222233 }); p.position.set(s.x, 0, s.z); p.rotation.y = Math.PI * .75; scene.add(p); COLL.push({ x: s.x, z: s.z, r: .5 }); }
+        else { const m = new THREE.Mesh(new THREE.TorusGeometry(1.6, .12, 8, 24), new THREE.MeshBasicMaterial({ color: 0xffc83d })); m.rotation.x = Math.PI / 2; m.position.set(s.x, .15, s.z); scene.add(m); s.ring = m; }
       });
-    }
-    async function doSubmit(id) {
-      const f = $('#f').files[0]; if (!f) return $('#u_err').textContent = 'กรุณาเลือกรูปก่อน';
-      const go = $('#go'); go.disabled = true; go.textContent = 'AI กำลังตรวจ…';
-      try {
-        const fd = new FormData(); fd.append('missionId', id); fd.append('image', await shrink(f), 'evidence.jpg');
-        const r = await api('/submissions', { method: 'POST', body: fd });
-        const msg = {
-          approved: `<p class="ok">✅ ผ่าน! +${r.reward?.points} Point · +${r.reward?.coins} Coin · +${r.reward?.exp} EXP</p>${r.certificate ? '<p>🎓 ได้รับใบประกาศ ดูได้ที่เมนู "ใบประกาศ"</p>' : ''}`,
-          rejected: '<p class="no">⚠️ กรุณาส่งหลักฐานใหม่</p>', needs_review: '<p>🕒 AI ไม่มั่นใจ ส่งให้ครูตรวจแล้ว ได้คะแนนเมื่อครูอนุมัติ</p>'
-        }[r.status];
-        openPanel(`<h2>ผลการตรวจ</h2>${msg}<p class="sm">${esc(r.reason)}</p><button onclick="closePanel()">ตกลง</button>`);
-      } catch (e) { go.disabled = false; go.textContent = 'ส่งให้ AI ตรวจ'; $('#u_err').textContent = e.message; }
-    }
-
-    async function showProfile() {
-      const hist = await api('/submissions/mine').catch(() => []); const SL = { approved: '✅ ผ่าน', rejected: '⚠️ ส่งใหม่', needs_review: '🕒 รอครูตรวจ' };
-      const u = ME.user, o = u.outfit;
-      openPanel(`<h2>โปรไฟล์</h2><p><b>Lv.${u.level} ${esc(u.title)}</b> · EXP ${u.exp}/${u.expNext}</p>
-   <h3>🌍 ผลกระทบที่คุณสร้างให้วิทยาลัย</h3>${ME.impact.length ? ME.impact.map(i => `<div class="row"><span>${esc(i.category)}</span><b>${i.count} ครั้ง${i.unit !== 'ครั้ง' ? ` · ${i.total} ${esc(i.unit)}` : ''}</b></div>`).join('') : '<p class="sm">ยังไม่มีข้อมูล ลองทำภารกิจแรกดู</p>'}
-   <h3>🏅 เหรียญตรา</h3>${ME.badges.map(b => `<div class="row"><span>${b.earned ? b.name : '🔒 ' + b.name}<div class="sm">${b.desc}</div></span><span class="sm">${b.have}/${b.need}</span></div>`).join('')}
-   <h3>🧾 ประวัติการส่งหลักฐาน</h3>${hist.slice(0, 8).map(h => `<div class="row"><span>${esc(h.title)}<div class="sm">${esc(h.created_at)} UTC</div></span><span>${SL[h.status] || h.status}</span></div>`).join('') || '<p class="sm">ยังไม่เคยส่ง</p>'}
-   <h3>👕 ตัวละคร</h3><label>เพศ/รูปลักษณ์</label><select id="o_g"><option value="f">หญิง</option><option value="m">ชาย</option></select>
-   <label>สีผม</label><input id="o_h" type="color" value="${o.hair}"><label>สีเสื้อ</label><input id="o_s" type="color" value="${o.shirt}">
-   <label>สีกางเกง/กระโปรง</label><input id="o_p" type="color" value="${o.pants}"><br><br><button onclick="saveOutfit()">บันทึกชุด</button>`);
-      $('#o_g').value = o.gender;
-    }
-    async function saveOutfit() { try { await api('/outfit', { method: 'POST', body: { gender: $('#o_g').value, hair: $('#o_h').value, shirt: $('#o_s').value, pants: $('#o_p').value } }); closePanel(); toast('บันทึกชุดแล้ว'); } catch (e) { toast(e.message); } }
-
-    async function showShop() {
-      const rs = await api('/rewards'), mine = await api('/redemptions/mine').catch(() => []); const RL = { pending: '🕒 รอรับของที่ครู', given: '✅ รับแล้ว', cancelled: '↩️ ยกเลิก (คืนคะแนนแล้ว)' };
-      openPanel(`<h2>ร้านแลกของรางวัล</h2><p class="sm">ใช้ Green Point (คุณมี ${ME.user.points})</p>` + rs.map(r => `<div class="row"><div><b>${esc(r.name)}</b><div class="sm">${r.cost} Point · เหลือ ${r.stock}</div></div>
-   <button ${r.stock < 1 || ME.user.points < r.cost ? 'disabled' : ''} onclick="redeem(${r.id})">แลก</button></div>`).join('') + '<h3>ประวัติการแลก</h3>' + (mine.map(d => `<div class="row"><span>${esc(d.name)}<div class="sm">${esc(d.created_at)} UTC</div></span><span class="sm">${RL[d.status] || d.status}</span></div>`).join('') || '<p class="sm">ยังไม่เคยแลก</p>'));
-    }
-    async function redeem(id) { if (!confirm('ยืนยันการแลกของรางวัลนี้? คะแนนจะถูกหักทันที')) return; try { const r = await api(`/rewards/${id}/redeem`, { method: 'POST' }); await refresh(); toast(`แลก "${r.name}" สำเร็จ รับของที่ครู`); showShop(); } catch (e) { toast(e.message); } }
-    async function showRank() {
-      const d = await api('/leaderboard');
-      openPanel(`<h2>อันดับ</h2><h3>🏫 ห้องเรียน</h3>${d.classes.map((c, i) => `<div class="row"><span>${i + 1}. ${esc(c.name)} <span class="sm">(${c.n} คน)</span></span><b>${c.p}</b></div>`).join('') || '<p class="sm">ยังไม่มีข้อมูล</p>'}
-   <h3>👤 นักเรียน</h3>${d.users.map((u, i) => `<div class="row"><span>${i + 1}. ${esc(u.name)} <span class="sm">${esc(u.classroom)}</span></span><b>${u.p}</b></div>`).join('')}`);
-    }
-    async function showCerts() {
-      const cs = await api('/certificates/mine');
-      openPanel('<h2>ใบประกาศของฉัน</h2>' + (cs.map(c => `<div class="row"><div><b>${esc(c.title)}</b><div class="sm">${esc(c.serial)}</div></div>
-   <button onclick="dlCert('${esc(c.serial)}')">ดาวน์โหลด PDF</button></div>`).join('') || '<p class="sm">ผ่านภารกิจที่มี 🎓 เพื่อรับใบประกาศ</p>'));
-    }
-    // ดาวน์โหลด PDF โดยแนบ Authorization header (ลิงก์ <a href> ธรรมดาไม่ส่ง token)
-    async function dlCert(serial) {
-      try {
-        const r = await fetch('/api/certificates/' + encodeURIComponent(serial) + '/pdf', { headers: { Authorization: 'Bearer ' + token } });
-        if (!r.ok) throw new Error('ดาวน์โหลดไม่สำเร็จ');
-        const url = URL.createObjectURL(await r.blob());
-        const a = document.createElement('a'); a.href = url; a.download = serial + '.pdf'; document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
-      } catch (e) { toast(e.message); }
-    }
-
-    /* ===== เรียนรู้ → เล่น → ทดสอบ ===== */
-    async function startLesson(key) {
-      const L = await api('/lesson/' + key); L.key = key; let p = 0;
-      const page = () => {
-        if (p >= L.pages.length) return sortGame(L); const g = L.pages[p];
-        openPanel(`<h2>รู้ก่อนเล่น: ${esc(L.title)} (${p + 1}/${L.pages.length})</h2><h3>${esc(g.h)}</h3><p>${esc(g.t)}</p><button onclick="window._n()">${p + 1 === L.pages.length ? 'เริ่มเล่นเกม' : 'ถัดไป'}</button>`);
-      };
-      window._n = () => { p++; page(); }; page();
-    }
-    const BINS = { green: ['เขียว (เปียก)', '#2f9e5b'], yellow: ['เหลือง (รีไซเคิล)', '#d9a400'], blue: ['ฟ้า (ทั่วไป)', '#3b83c4'], red: ['แดง (อันตราย)', '#e8554a'] };
-    function sortGame(L) {
-      const items = [...L.items].sort(() => Math.random() - .5), picks = {}; let i = 0;
-      window._pick = b => { picks[items[i].n] = b; i++; step(); };
-      const step = () => {
-        if (i >= items.length) return quiz(L, picks);
-        openPanel(`<h2>เกมแยกขยะ (${i + 1}/${items.length})</h2><p style="font-size:3rem;margin:.2em 0;text-align:center">${items[i].e}</p><p style="text-align:center"><b>${esc(items[i].n)}</b> ทิ้งถังไหน?</p>
-     <div class="grid">${Object.entries(BINS).map(([k, [n, c]]) => `<button class="bin" style="background:${c}" onclick="_pick('${k}')">${n}</button>`).join('')}</div>`);
-      };
-      step();
-    }
-    function quiz(L, picks) {
-      const answers = []; let q = 0; window._ans = a => { answers.push(a); q++; step(); };
-      const step = async () => {
-        if (q >= L.quiz.length) { // ส่งคำตอบให้เซิร์ฟเวอร์ตรวจและให้คะแนน (เฉลยไม่อยู่ในเบราว์เซอร์)
-          try {
-            const r = await api(`/lesson/${L.key}/submit`, { method: 'POST', body: { sort: picks, quiz: answers } });
-            openPanel(`<h2>สรุปผล</h2><p>แยกขยะถูก ${r.sortRight}/${r.sortTotal} · Quiz ถูก ${r.quizRight}/${r.quizTotal}</p><p class="ok">+${r.points} Point · +${r.coins} Coin · +${r.exp} EXP</p>
-          ${r.capped ? '<p class="sm">ถึงเพดานคะแนนเกมของวันนี้แล้ว ลองทำกิจกรรมจริงเพื่อรับคะแนนมากกว่า</p>' : ''}<button onclick="closePanel()">ปิด</button>`);
-          } catch (e) { toast(e.message); closePanel(); } return;
-        }
-        const Q = L.quiz[q]; openPanel(`<h2>ทดสอบความรู้ (${q + 1}/${L.quiz.length})</h2><p><b>${esc(Q.q)}</b></p><div class="grid">${Q.c.map((c, k) => `<button class="alt" onclick="_ans(${k})">${esc(c)}</button>`).join('')}</div>`);
-      };
-      step();
-    }
-    /* ===== NPC ===== */
-    const NPC_TALK = {
-      teacher: ['ครูใจดี', 'วันนี้มีภารกิจรอเธออยู่ ทำกิจกรรมจริงแล้วส่งรูปหลักฐานมาได้เลย', showMissions],
-      gardener: ['พี่สวน', 'ต้นไม้ปลูกด้วยใจ ปลูกต้นไม้จริง 1 ต้น แล้วถ่ายรูปส่งภารกิจ "ปลูกต้นไม้" ได้เลย!', showMissions],
-      mascot: ['น้องใบไม้ 🍃', 'สวัสดี! เก็บ EXP จนเลเวลสูงขึ้นจะปลดล็อกตำแหน่งใหม่ ๆ นะ', showProfile],
-    };
-    function talk(k) { const [n, t, f] = NPC_TALK[k]; openPanel(`<h2>${n}</h2><p>${t}</p><button onclick="closePanel();NPC_TALK['${k}'][2]()">ไปต่อ</button>`); }
-
-    /* ================= 3D WORLD ================= */
-    const canvas = $('#game'), renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); canvas.style.touchAction = 'none';
-    const scene = new THREE.Scene(); scene.background = new THREE.Color(0xbfe6f5); scene.fog = new THREE.Fog(0xbfe6f5, 40, 110);
-    const cam = new THREE.PerspectiveCamera(55, 1, .1, 200);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x7bbf86, .95));
-    const sun = new THREE.DirectionalLight(0xfff2cc, .7); sun.position.set(20, 40, 10); scene.add(sun);
-    const WORLD = 36; // ครึ่งหนึ่งของความกว้างพื้นที่
-    const COLL = [];  // วัตถุที่เดินทะลุไม่ได้: กล่อง {x,z,hw,hd} หรือวงกลม {x,z,r}
-    const box = (w, h, d, c, x, y, z) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), new THREE.MeshLambertMaterial({ color: c })); m.position.set(x, y, z); scene.add(m); return m; };
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(WORLD * 2, WORLD * 2), new THREE.MeshLambertMaterial({ color: 0x8fd19e })); ground.rotation.x = -Math.PI / 2; scene.add(ground);
-    box(5, .05, WORLD * 2, 0xe9e2cf, 0, .03, 0); box(WORLD * 2, .05, 5, 0xe9e2cf, 0, .03, 0); // ทางเดิน
-    function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-    const rand = rng(20260); // สุ่มแบบคงที่ ต้นไม้อยู่ที่เดิมทุกครั้งที่เปิดเกม
-    function tree(x, z) { box(.5, 2, .5, 0x7a5236, x, 1, z); const t = new THREE.Mesh(new THREE.ConeGeometry(1.7, 4, 8), new THREE.MeshLambertMaterial({ color: 0x2f8f4e })); t.position.set(x, 4, z); scene.add(t); COLL.push({ x, z, r: .5 }); }
-    // โซน: [ชื่อ, x, z, สี, ขนาด[กว้าง,สูง,ลึก]]
-    const ZONES = [
-      ['อาคารเรียน', -22, -20, 0xf2d7a1, [12, 7, 8]], ['จุดคัดแยกขยะ', 20, -18, 0x2f9e5b, [6, 2.5, 3]],
-      ['ร้านค้าแลกของรางวัล', 22, 20, 0xffc83d, [7, 4, 5]], ['Game Zone', -22, 20, 0xb085f5, [8, 4, 6]],
-      ['ลานกิจกรรม', 0, -26, 0xe8554a, [8, .4, 8]], ['จุดประหยัดพลังงาน', -8, 26, 0xf7e04b, [4, 3, 3]],
-    ];
-    ZONES.forEach(([n, x, z, c, s]) => { box(...s, c, x, s[1] / 2, z); if (s[1] > 1) COLL.push({ x, z, hw: s[0] / 2, hd: s[2] / 2 }); });
-    // จุดโต้ตอบ: NPC (มี npc) และจุดในแผนที่ (มีวงแหวนเหลือง)
-    const SPOTS = [
-      { name: 'ครูใจดี (คุยเพื่อรับภารกิจ)', short: 'ครูใจดี', x: -14, z: -10, act: () => talk('teacher'), npc: 0xffffff },
-      { name: 'พี่สวน (ปลูกต้นไม้)', short: 'พี่สวน', x: 8, z: 12, act: () => talk('gardener'), npc: 0xc7a46b },
-      { name: 'น้องใบไม้ มาสคอต', short: 'น้องใบไม้', x: 4, z: -4, act: () => talk('mascot'), npc: 0x7ee08a },
-      { name: 'จุดคัดแยกขยะ (เรียน + เล่นเกม)', x: 20, z: -14, act: () => startLesson('waste') },
-      { name: 'ร้านค้าแลกของรางวัล', x: 22, z: 15, act: showShop },
-      { name: 'Game Zone (เกมแยกขยะ)', x: -22, z: 14, act: () => startLesson('waste') },
-      { name: 'จุดประหยัดพลังงาน (ภารกิจปิดไฟ)', x: -8, z: 21, act: showMissions },
-      { name: 'ลานกิจกรรม (ภารกิจพิเศษ)', x: 0, z: -20, act: showMissions },
-    ];
-    for (let i = 0; i < 70 && COLL.filter(c => c.r).length < 40; i++) {
-      const x = (rand() - .5) * 2 * (WORLD - 3), z = (rand() - .5) * 2 * (WORLD - 3);
-      if (Math.abs(x) > 4 && Math.abs(z) > 4 && !ZONES.some(q => Math.hypot(q[1] - x, q[2] - z) < 9) && !SPOTS.some(q => Math.hypot(q.x - x, q.z - z) < 4.5)) tree(x, z);
-    }
-    function person(colors) { // ตัวละครสไตล์การ์ตูนจากรูปทรงพื้นฐาน (เปลี่ยนเป็นโมเดล VRoid ได้ภายหลัง)
-      const g = new THREE.Group(), mat = c => new THREE.MeshLambertMaterial({ color: c });
-      const body = new THREE.Mesh(new THREE.CylinderGeometry(.45, .5, 1.1, 12), mat(colors.shirt)); body.position.y = 1.35;
-      const legs = new THREE.Mesh(new THREE.CylinderGeometry(.4, .42, .8, 12), mat(colors.pants)); legs.position.y = .5;
-      const head = new THREE.Mesh(new THREE.SphereGeometry(.55, 16, 12), mat(0xffdcb8)); head.position.y = 2.35;
-      const hair = new THREE.Mesh(new THREE.SphereGeometry(.6, 16, 12, 0, Math.PI * 2, 0, Math.PI * .6), mat(colors.hair)); hair.position.y = 2.42;
-      const tail = new THREE.Mesh(new THREE.SphereGeometry(.28, 10, 8), mat(colors.hair)); tail.position.set(0, 2.1, -.55); tail.scale.set(1, 1.8, 1);
-      [-.2, .2].forEach(x => { const e = new THREE.Mesh(new THREE.SphereGeometry(.07, 8, 6), mat(0x222222)); e.position.set(x, 2.38, .5); g.add(e); });
-      g.add(body, legs, head, hair, tail); g.userData = { body, legs, hair, tail }; return g;
-    }
-    SPOTS.forEach(s => {
-      if (s.npc) { const p = person({ shirt: s.npc, pants: 0x556b8a, hair: 0x222233 }); p.position.set(s.x, 0, s.z); p.rotation.y = Math.PI * .75; scene.add(p); COLL.push({ x: s.x, z: s.z, r: .5 }); }
-      else { const m = new THREE.Mesh(new THREE.TorusGeometry(1.6, .12, 8, 24), new THREE.MeshBasicMaterial({ color: 0xffc83d })); m.rotation.x = Math.PI / 2; m.position.set(s.x, .15, s.z); scene.add(m); s.ring = m; }
-    });
-    function label(text, x, y, z, w) { // ป้ายชื่อลอยเหนืออาคาร/NPC
-      const c = document.createElement('canvas'); c.width = 512; c.height = 96; const g = c.getContext('2d');
-      g.font = '600 38px Prompt, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
-      const tw = Math.min(500, g.measureText(text).width + 44); g.fillStyle = 'rgba(15,42,34,.85)';
-      g.beginPath(); if (g.roundRect) g.roundRect(256 - tw / 2, 14, tw, 68, 30); else g.rect(256 - tw / 2, 14, tw, 68); g.fill();
-      g.fillStyle = '#fff'; g.fillText(text, 256, 50);
-      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true })); s.position.set(x, y, z); s.scale.set(w, w * 96 / 512, 1); scene.add(s);
-    }
-    document.fonts.ready.then(() => {
-      ZONES.forEach(([n, x, z, , s]) => label(n, x, s[1] + 2.2, z, 9));
-      SPOTS.forEach(s => s.short && label(s.short, s.x, 3.7, s.z, 4.5));
-    });
-    let player = person({ shirt: 0x2f9e5b, pants: 0x2b4a7a, hair: 0x3b2a20 }); scene.add(player); player.position.set(0, 0, 8);
-    function applyOutfit() {
-      if (!ME) return; const o = ME.user.outfit; player.userData.body.material.color.set(o.shirt); player.userData.legs.material.color.set(o.pants);
-      player.userData.hair.material.color.set(o.hair); player.userData.tail.material.color.set(o.hair); player.userData.tail.visible = o.gender === 'f';
-    }
-    function collide(p) { // ดันตัวละครออกจากอาคาร/ต้นไม้/NPC
-      const R = .6;
-      for (const c of COLL) {
-        if (c.r) { const dx = p.x - c.x, dz = p.z - c.z, d = Math.hypot(dx, dz), m = c.r + R; if (d < m && d > 0) { p.x = c.x + dx / d * m; p.z = c.z + dz / d * m; } }
-        else {
-          const nx = Math.max(c.x - c.hw, Math.min(p.x, c.x + c.hw)), nz = Math.max(c.z - c.hd, Math.min(p.z, c.z + c.hd)), dx = p.x - nx, dz = p.z - nz, d = Math.hypot(dx, dz);
-          if (d < R) {
-            if (d > 0) { p.x = nx + dx / d * R; p.z = nz + dz / d * R; }
-            else { const px = c.hw - Math.abs(p.x - c.x), pz = c.hd - Math.abs(p.z - c.z); if (px < pz) p.x = c.x + (p.x >= c.x ? 1 : -1) * (c.hw + R); else p.z = c.z + (p.z >= c.z ? 1 : -1) * (c.hd + R); }
+      function label(text, x, y, z, w) { // ป้ายชื่อลอยเหนืออาคาร/NPC
+        const c = document.createElement('canvas'); c.width = 512; c.height = 96; const g = c.getContext('2d');
+        g.font = '600 38px Prompt, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        const tw = Math.min(500, g.measureText(text).width + 44); g.fillStyle = 'rgba(15,42,34,.85)';
+        g.beginPath(); if (g.roundRect) g.roundRect(256 - tw / 2, 14, tw, 68, 30); else g.rect(256 - tw / 2, 14, tw, 68); g.fill();
+        g.fillStyle = '#fff'; g.fillText(text, 256, 50);
+        const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true })); s.position.set(x, y, z); s.scale.set(w, w * 96 / 512, 1); scene.add(s);
+      }
+      document.fonts.ready.then(() => {
+        ZONES.forEach(([n, x, z, , s]) => label(n, x, s[1] + 2.2, z, 9));
+        SPOTS.forEach(s => s.short && label(s.short, s.x, 3.7, s.z, 4.5));
+      });
+      let player = person({ shirt: 0x2f9e5b, pants: 0x2b4a7a, hair: 0x3b2a20 }); scene.add(player); player.position.set(0, 0, 8);
+      function applyOutfit() {
+        if (!ME) return; const o = ME.user.outfit; player.userData.body.material.color.set(o.shirt); player.userData.legs.material.color.set(o.pants);
+        player.userData.hair.material.color.set(o.hair); player.userData.tail.material.color.set(o.hair); player.userData.tail.visible = o.gender === 'f';
+      }
+      function collide(p) { // ดันตัวละครออกจากอาคาร/ต้นไม้/NPC
+        const R = .6;
+        for (const c of COLL) {
+          if (c.r) { const dx = p.x - c.x, dz = p.z - c.z, d = Math.hypot(dx, dz), m = c.r + R; if (d < m && d > 0) { p.x = c.x + dx / d * m; p.z = c.z + dz / d * m; } }
+          else {
+            const nx = Math.max(c.x - c.hw, Math.min(p.x, c.x + c.hw)), nz = Math.max(c.z - c.hd, Math.min(p.z, c.z + c.hd)), dx = p.x - nx, dz = p.z - nz, d = Math.hypot(dx, dz);
+            if (d < R) {
+              if (d > 0) { p.x = nx + dx / d * R; p.z = nz + dz / d * R; }
+              else { const px = c.hw - Math.abs(p.x - c.x), pz = c.hd - Math.abs(p.z - c.z); if (px < pz) p.x = c.x + (p.x >= c.x ? 1 : -1) * (c.hw + R); else p.z = c.z + (p.z >= c.z ? 1 : -1) * (c.hd + R); }
+            }
           }
         }
       }
-    }
 
-    /* ---- ควบคุม ---- */
-    const keys = {}; let camAng = 0, near = null;
-    const joy = { x: 0, y: 0 }, pad = $('#pad');
-    const drag = { on: false, x: 0, id: null };
+      /* ---- ควบคุม ---- */
+      const keys = {}; let camAng = 0, near = null;
+      const joy = { x: 0, y: 0 }, pad = $('#pad');
+      const drag = { on: false, x: 0, id: null };
 
-    // ล้างสถานะปุ่ม/จอย/การลากทั้งหมด (กันตัวละครเดินเอง)
-    function releaseAll() {
-      for (const k in keys) keys[k] = false;
-      joy.x = joy.y = 0; pad.firstElementChild.style.transform = '';
-      drag.on = false; drag.id = null;
-    }
+      // ล้างสถานะปุ่ม/จอย/การลากทั้งหมด (กันตัวละครเดินเอง)
+      function releaseAll() {
+        for (const k in keys) keys[k] = false;
+        joy.x = joy.y = 0; pad.firstElementChild.style.transform = '';
+        drag.on = false; drag.id = null;
+      }
 
-    addEventListener('keydown', e => {
-      const k = e.key.toLowerCase();
-      if (k === 'escape' && busy && $('#panel .x').style.display !== 'none') return closePanel();
-      if (busy) return;
-      keys[k] = true;
-      if (k === 'e' && near) near.act();
-    });
-    addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+      addEventListener('keydown', e => {
+        const k = e.key.toLowerCase();
+        if (k === 'escape' && busy && $('#panel .x').style.display !== 'none') return closePanel();
+        if (busy) return;
+        keys[k] = true;
+        if (k === 'e' && near) near.act();
+      });
+      addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
 
-    // หน้าต่างเสียโฟกัส / เปลี่ยนแท็บ / เมนูคลิกขวาเปิด → ล้างสถานะ
-    addEventListener('blur', releaseAll);
-    document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
-    addEventListener('contextmenu', e => { if (e.target === canvas || pad.contains(e.target)) { e.preventDefault(); releaseAll(); } });
+      // หน้าต่างเสียโฟกัส / เปลี่ยนแท็บ / เมนูคลิกขวาเปิด → ล้างสถานะ
+      addEventListener('blur', releaseAll);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
+      addEventListener('contextmenu', e => { if (e.target === canvas || pad.contains(e.target)) { e.preventDefault(); releaseAll(); } });
 
-    /* ---- จอยสติ๊ก (มือถือ) ---- */
-    const joyMove = e => {
-      const r = pad.getBoundingClientRect(), t = e.touches[0];
-      if (!t) return;
-      joy.x = Math.max(-1, Math.min(1, (t.clientX - r.left - 55) / 45));
-      joy.y = Math.max(-1, Math.min(1, (t.clientY - r.top - 55) / 45));
-      pad.firstElementChild.style.transform = `translate(${joy.x * 30}px,${joy.y * 30}px)`;
-      e.preventDefault();
-    };
-    const joyStop = () => { joy.x = joy.y = 0; pad.firstElementChild.style.transform = ''; };
-    pad.addEventListener('touchstart', joyMove, { passive: false });
-    pad.addEventListener('touchmove', joyMove, { passive: false });
-    pad.addEventListener('touchend', joyStop);
-    pad.addEventListener('touchcancel', joyStop); // เมนูคลิกขวา/กดค้างทำให้เกิด touchcancel แทน touchend
+      /* ---- จอยสติ๊ก (มือถือ) ---- */
+      const joyMove = e => {
+        const r = pad.getBoundingClientRect(), t = e.touches[0];
+        if (!t) return;
+        joy.x = Math.max(-1, Math.min(1, (t.clientX - r.left - 55) / 45));
+        joy.y = Math.max(-1, Math.min(1, (t.clientY - r.top - 55) / 45));
+        pad.firstElementChild.style.transform = `translate(${joy.x * 30}px,${joy.y * 30}px)`;
+        e.preventDefault();
+      };
+      const joyStop = () => { joy.x = joy.y = 0; pad.firstElementChild.style.transform = ''; };
+      pad.addEventListener('touchstart', joyMove, { passive: false });
+      pad.addEventListener('touchmove', joyMove, { passive: false });
+      pad.addEventListener('touchend', joyStop);
+      pad.addEventListener('touchcancel', joyStop); // เมนูคลิกขวา/กดค้างทำให้เกิด touchcancel แทน touchend
 
-    /* ---- ลากเพื่อหมุนกล้อง (ปุ่มซ้าย/นิ้วเท่านั้น) ---- */
-    canvas.addEventListener('pointerdown', e => {
-      if (e.pointerType === 'mouse' && e.button !== 0) return; // ไม่เอาคลิกขวา/ล้อกลาง
-      drag.on = true; drag.x = e.clientX; drag.id = e.pointerId;
-      canvas.setPointerCapture(e.pointerId);
-    });
-    canvas.addEventListener('pointermove', e => {
-      if (!drag.on || e.pointerId !== drag.id) return;
-      if (e.pointerType === 'mouse' && !(e.buttons & 1)) { drag.on = false; return; } // ปุ่มถูกปล่อยไปแล้ว
-      camAng -= (e.clientX - drag.x) * .006; drag.x = e.clientX;
-    });
-    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t =>
-      canvas.addEventListener(t, () => { drag.on = false; drag.id = null; }));
-    addEventListener('pointerup', () => { drag.on = false; });
+      /* ---- ลากเพื่อหมุนกล้อง (ปุ่มซ้าย/นิ้วเท่านั้น) ---- */
+      canvas.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return; // ไม่เอาคลิกขวา/ล้อกลาง
+        drag.on = true; drag.x = e.clientX; drag.id = e.pointerId;
+        canvas.setPointerCapture(e.pointerId);
+      });
+      canvas.addEventListener('pointermove', e => {
+        if (!drag.on || e.pointerId !== drag.id) return;
+        if (e.pointerType === 'mouse' && !(e.buttons & 1)) { drag.on = false; return; } // ปุ่มถูกปล่อยไปแล้ว
+        camAng -= (e.clientX - drag.x) * .006; drag.x = e.clientX;
+      });
+      ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t =>
+        canvas.addEventListener(t, () => { drag.on = false; drag.id = null; }));
+      addEventListener('pointerup', () => { drag.on = false; });
 
-    const hint = $('#hint'); hint.style.pointerEvents = 'auto'; hint.onclick = () => near && !busy && near.act();
-    const mini = $('#mini').getContext('2d');
-    function drawMini() {
-      const S = 132, k = S / (WORLD * 2); mini.clearRect(0, 0, S, S); mini.fillStyle = '#9fd3a8'; mini.fillRect(0, 0, S, S);
-      mini.fillStyle = '#e9e2cf'; mini.fillRect(S / 2 - 3, 0, 6, S); mini.fillRect(0, S / 2 - 3, S, 6);
-      ZONES.forEach(z => { mini.fillStyle = '#' + z[3].toString(16).padStart(6, '0'); mini.fillRect(S / 2 + z[1] * k - 4, S / 2 + z[2] * k - 4, 8, 8); });
-      SPOTS.forEach(s => { mini.fillStyle = '#0f2a22'; mini.fillRect(S / 2 + s.x * k - 1.5, S / 2 + s.z * k - 1.5, 3, 3); });
-      mini.fillStyle = '#e8554a'; mini.beginPath(); mini.arc(S / 2 + player.position.x * k, S / 2 + player.position.z * k, 4, 0, 7); mini.fill();
-    }
-    const clock = new THREE.Clock(), camTarget = new THREE.Vector3();
-    function loop() {
-      requestAnimationFrame(loop); const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
-      let ix = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0) + joy.x, iz = (keys.s || keys.arrowdown ? 1 : 0) - (keys.w || keys.arrowup ? 1 : 0) + joy.y;
-      const len = Math.hypot(ix, iz);
-      if (!busy && len > .1) {
-        ix /= Math.max(1, len); iz /= Math.max(1, len); const sp = (keys.shift ? 11 : 6.5) * dt;
-        const c = Math.cos(camAng), s = Math.sin(camAng), mx = ix * c + iz * s, mz = -ix * s + iz * c; // เดินตามทิศของกล้อง
-        const p = player.position; p.x = Math.max(-WORLD + 1, Math.min(WORLD - 1, p.x + mx * sp)); p.z = Math.max(-WORLD + 1, Math.min(WORLD - 1, p.z + mz * sp));
-        collide(p); player.rotation.y = Math.atan2(mx, mz); p.y = Math.abs(Math.sin(t * 12)) * .12;
-      } else player.position.y = 0;
-      camTarget.set(player.position.x + Math.sin(camAng) * 12, 9, player.position.z + Math.cos(camAng) * 12);
-      cam.position.lerp(camTarget, .12); cam.lookAt(player.position.x, 1.5, player.position.z);
-      const d2 = s => Math.hypot(s.x - player.position.x, s.z - player.position.z);
-      near = SPOTS.filter(s => d2(s) < 3.2).sort((a, b) => d2(a) - d2(b))[0] || null;
-      hint.style.display = near && !busy ? 'block' : 'none'; if (near) hint.textContent = 'กด E หรือแตะที่นี่: ' + near.name;
-      SPOTS.forEach(s => s.ring && s.ring.scale.setScalar(1 + Math.sin(t * 3) * .08));
-      renderer.render(scene, cam); drawMini();
-    }
-    function resize() { renderer.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); }
-    addEventListener('resize', resize); resize(); loop();
+      const hint = $('#hint'); hint.style.pointerEvents = 'auto'; hint.onclick = () => near && !busy && near.act();
+      const mini = $('#mini').getContext('2d');
+      function drawMini() {
+        const S = 132, k = S / (WORLD * 2); mini.clearRect(0, 0, S, S); mini.fillStyle = '#9fd3a8'; mini.fillRect(0, 0, S, S);
+        mini.fillStyle = '#e9e2cf'; mini.fillRect(S / 2 - 3, 0, 6, S); mini.fillRect(0, S / 2 - 3, S, 6);
+        ZONES.forEach(z => { mini.fillStyle = '#' + z[3].toString(16).padStart(6, '0'); mini.fillRect(S / 2 + z[1] * k - 4, S / 2 + z[2] * k - 4, 8, 8); });
+        SPOTS.forEach(s => { mini.fillStyle = '#0f2a22'; mini.fillRect(S / 2 + s.x * k - 1.5, S / 2 + s.z * k - 1.5, 3, 3); });
+        mini.fillStyle = '#e8554a'; mini.beginPath(); mini.arc(S / 2 + player.position.x * k, S / 2 + player.position.z * k, 4, 0, 7); mini.fill();
+      }
+      const clock = new THREE.Clock(), camTarget = new THREE.Vector3();
+      function loop() {
+        requestAnimationFrame(loop); const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+        let ix = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0) + joy.x, iz = (keys.s || keys.arrowdown ? 1 : 0) - (keys.w || keys.arrowup ? 1 : 0) + joy.y;
+        const len = Math.hypot(ix, iz);
+        if (!busy && len > .1) {
+          ix /= Math.max(1, len); iz /= Math.max(1, len); const sp = (keys.shift ? 11 : 6.5) * dt;
+          const c = Math.cos(camAng), s = Math.sin(camAng), mx = ix * c + iz * s, mz = -ix * s + iz * c; // เดินตามทิศของกล้อง
+          const p = player.position; p.x = Math.max(-WORLD + 1, Math.min(WORLD - 1, p.x + mx * sp)); p.z = Math.max(-WORLD + 1, Math.min(WORLD - 1, p.z + mz * sp));
+          collide(p); player.rotation.y = Math.atan2(mx, mz); p.y = Math.abs(Math.sin(t * 12)) * .12;
+        } else player.position.y = 0;
+        camTarget.set(player.position.x + Math.sin(camAng) * 12, 9, player.position.z + Math.cos(camAng) * 12);
+        cam.position.lerp(camTarget, .12); cam.lookAt(player.position.x, 1.5, player.position.z);
+        const d2 = s => Math.hypot(s.x - player.position.x, s.z - player.position.z);
+        near = SPOTS.filter(s => d2(s) < 3.2).sort((a, b) => d2(a) - d2(b))[0] || null;
+        hint.style.display = near && !busy ? 'block' : 'none'; if (near) hint.textContent = 'กด E หรือแตะที่นี่: ' + near.name;
+        SPOTS.forEach(s => s.ring && s.ring.scale.setScalar(1 + Math.sin(t * 3) * .08));
+        renderer.render(scene, cam); drawMini();
+      }
+      function resize() { renderer.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); }
+      addEventListener('resize', resize); resize(); loop();
 
-    /* ===== SPLASH SCREEN SYSTEM ===== */
+      /* ===== SPLASH SCREEN SYSTEM ===== */
 
-    function hideSplash() {
-      const splash = document.getElementById('splash');
-      if (!splash) return;
-      splash.classList.add('hide');
-      setTimeout(() => { splash.remove(); }, 650);
-    }
+      function hideSplash() {
+        const splash = document.getElementById('splash');
+        if (!splash) return;
+        splash.classList.add('hide');
+        setTimeout(() => { splash.remove(); }, 650);
+      }
 
-    function updateSplash(text, percent) {
-      const status = document.getElementById('splashStatus');
-      const bar = document.getElementById('splashBar');
-      const percentText = document.getElementById('splashPercent');
-      if (status) status.textContent = text;
-      if (bar) bar.style.width = percent + '%';
-      if (percentText) percentText.textContent = percent + '%';
-    }
+      function updateSplash(text, percent) {
+        const status = document.getElementById('splashStatus');
+        const bar = document.getElementById('splashBar');
+        const percentText = document.getElementById('splashPercent');
+        if (status) status.textContent = text;
+        if (bar) bar.style.width = percent + '%';
+        if (percentText) percentText.textContent = percent + '%';
+      }
 
-    /* ===== START GAME ===== */
+      /* ===== START GAME ===== */
 
-    async function bootGame() {
-      const startTime = Date.now();
+      async function bootGame() {
+        const startTime = Date.now();
 
-      try {
-        // ขั้นตอน 1: เริ่มต้นระบบ
-        updateSplash('กำลังเริ่มต้นระบบเกม...', 10);
-        await new Promise(resolve => requestAnimationFrame(resolve));
+        try {
+          // ขั้นตอน 1: เริ่มต้นระบบ
+          updateSplash('กำลังเริ่มต้นระบบเกม...', 10);
+          await new Promise(resolve => requestAnimationFrame(resolve));
 
-        // ขั้นตอน 2: เตรียมฉาก 3D
-        updateSplash('กำลังเตรียมโลก Green Campus...', 30);
-        renderer.render(scene, cam);
-        await new Promise(resolve => requestAnimationFrame(resolve));
+          // ขั้นตอน 2: เตรียมฉาก 3D
+          updateSplash('กำลังเตรียมโลก Green Campus...', 30);
+          renderer.render(scene, cam);
+          await new Promise(resolve => requestAnimationFrame(resolve));
 
-        updateSplash('กำลังโหลดแผนที่และตัวละคร...', 50);
+          updateSplash('กำลังโหลดแผนที่และตัวละคร...', 50);
 
-        // ขั้นตอน 3: ตรวจสอบบัญชี
-        updateSplash('กำลังเชื่อมต่อระบบบัญชี...', 65);
+          // ขั้นตอน 3: ตรวจสอบบัญชี
+          updateSplash('กำลังเชื่อมต่อระบบบัญชี...', 65);
 
-        if (token) {
-          try {
-            await refresh();
-            updateSplash('กำลังโหลดข้อมูลผู้เล่น...', 85);
-          } catch (error) {
-            // กรณี 401 ฟังก์ชัน api() จะลบ token และรีโหลดหน้าให้เอง
-            // ถ้าเป็นเน็ตหลุด/เซิร์ฟเวอร์ล่ม ให้เก็บ token ไว้ ผู้เล่นจะได้ไม่ต้องล็อกอินใหม่
-            console.error('ตรวจสอบบัญชีไม่สำเร็จ:', error);
-            showLogin('login', 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาลองใหม่');
+          if (token) {
+            try {
+              await refresh();
+              updateSplash('กำลังโหลดข้อมูลผู้เล่น...', 85);
+            } catch (error) {
+              // กรณี 401 ฟังก์ชัน api() จะลบ token และรีโหลดหน้าให้เอง
+              // ถ้าเป็นเน็ตหลุด/เซิร์ฟเวอร์ล่ม ให้เก็บ token ไว้ ผู้เล่นจะได้ไม่ต้องล็อกอินใหม่
+              console.error('ตรวจสอบบัญชีไม่สำเร็จ:', error);
+              showLogin('login', 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาลองใหม่');
+            }
+          } else {
+            updateSplash('กำลังเตรียมหน้าเข้าสู่ระบบ...', 85);
+            showLogin();
           }
-        } else {
-          updateSplash('กำลังเตรียมหน้าเข้าสู่ระบบ...', 85);
-          showLogin();
-        }
 
         // ขั้นตอน 4: เตรียมเกมเสร็จ
         updateSplash('เตรียม Green Campus เรียบร้อย!', 100);
@@ -1075,6 +1126,13 @@
 <script src="green-campus-sky.js"></script>
 <script src="green-campus-quests.js"></script>
 <script src="green-campus-garden.js"></script>
+<script src="green-campus-3d.js"></script>
 <script src="green-campus-garden-ui.js"></script>
+
+<!-- ใส่ 2 ไฟล์ใหม่ต่อท้ายตรงนี้ครับ -->
+<script src="green-campus-anime-model.js"></script>
+<script src="green-campus-anime-master.js"></script>
+<script src="green-campus-masterpiece.js"></script>
+<script src="green-campus-anime-outfit.js"></script>
 </body>
 </html>
