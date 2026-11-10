@@ -62,7 +62,7 @@
     $('#stat').innerHTML = `<div class="gcn">🌱 <b>${esc(u.name)}</b> <span class="sm">${esc(u.classroom)}</span></div><div class="bar"><i style="width:${pct}%"></i></div>
     <div class="sm">Lv.${u.level} ${esc(u.title)} · ${u.exp}/${u.expNext}</div>`;
     chips.innerHTML = `<span class="cp">🟢 ${u.points}<button onclick="showMissions()" aria-label="รับแต้มเพิ่ม">＋</button></span><span class="cp">🪙 ${u.coins}<button onclick="showShop()" aria-label="ไปร้านค้า">＋</button></span><button class="gear" onclick="gcSettings()" aria-label="ตั้งค่า">⚙️</button>`;
-    loadQuest();
+    window.gcQuests ? window.gcQuests() : loadQuest();
   };
   if (ME) renderStat();
 })();

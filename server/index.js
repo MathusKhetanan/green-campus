@@ -110,6 +110,7 @@ async function usedCount(d, uid, m) {
 }
 
 async function grant(d, sub, m) {
+  if (m.category === 'tree') await giveItem(d, sub.user_id, 'seed_tree', 1); // ปลูกต้นไม้จริง → ได้ต้นกล้าไปปลูกในสวน
   await award(d, sub.user_id, m.points, m.coins, m.exp);
   await d.run('UPDATE submissions SET pts_granted=?, coins_granted=?, exp_granted=? WHERE id=?', [m.points, m.coins, m.exp, sub.id]);
   if (m.certificate) {
@@ -575,6 +576,14 @@ async function cleanImages() {
   } catch (e) { console.error('ลบรูปเก่าไม่สำเร็จ:', e.message); }
 }
 cleanImages(); setInterval(cleanImages, 24 * 3600e3).unref();
+
+// ---- ภารกิจประจำวัน / หีบ / สตรีค / เป้าหมายห้อง ----
+const { registerQuests } = await import('./quests.js');
+await registerQuests({ app, db, student, h, award, thaiDay, thaiDayStartUtc, TH, nowUtc });
+
+// ---- สวน / กระเป๋า / ตู้เสื้อผ้า ----
+const { registerGame, giveItem } = await import('./game.js');
+await registerGame({ app, db, student, h, award, thaiDay, nowUtc });
 
 // ---- ตัวจัดการ error (ต้องอยู่หลังทุก route) ----
 app.use((err, req, res, next) => {
